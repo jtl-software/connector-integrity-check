@@ -17,26 +17,5 @@ function integrity()
 }
 
 // @TODO: Register your tests
-class Test extends \Jtl\Connector\Integrity\Models\Test\AbstractTest
-{
-    public function run()
-    {
-        // Bla magic stuff
-        $this->results->add(
-            (new \Jtl\Connector\Integrity\Models\Test\Result())
-                ->setType(
-                    (new \Jtl\Connector\Integrity\Models\Test\TestType(\Jtl\Connector\Integrity\Models\Test\TestType::REQUIREMENTS))
-                )
-                ->addData(
-                    (new \Jtl\Connector\Integrity\Models\Test\Data())
-                        ->setMessage('Junge, hat geklappt')
-                )
-        );
-    }
-}
-
-integrity()->registerTest(
-    (new Test())
-);
 
 integrity()->run();
