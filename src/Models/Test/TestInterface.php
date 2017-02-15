@@ -3,8 +3,10 @@ namespace Jtl\Connector\Integrity\Models\Test;
 
 interface TestInterface
 {
+    public function run();
+    
     /**
-     * @return int
+     * @return ResultCollection
      */
-    public function getSort();
+    public function getResults();
 }

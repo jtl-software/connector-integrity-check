@@ -1,8 +1,9 @@
 <?php
 namespace Jtl\Connector\Integrity;
 
+use Jtl\Connector\Integrity\Models\Http\Response;
+use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
-use Jtl\Connector\Integrity\Models\Test\TestInterface;
 
 final class IntegrityCheck
 {
@@ -33,10 +34,10 @@ final class IntegrityCheck
     }
     
     /**
-     * @param TestInterface $test
+     * @param AbstractTest $test
      * @return IntegrityCheck
      */
-    public function registerTest(TestInterface $test)
+    public function registerTest(AbstractTest $test)
     {
         $this->tests->add($test);
         return $this;
@@ -45,13 +46,17 @@ final class IntegrityCheck
     /**
      * @param TestInterface[]
      * @return IntegrityCheck
+     * @throws \InvalidArgumentException
      */
     public function registerTests(array $tests)
     {
         $this->tests = new TestCollection();
         foreach ($tests as $test) {
-            if (!($test instanceof TestInterface)) {
-                throw new \InvalidArgumentException('Some element is not an instance of TestInterface');
+            if (!($test instanceof AbstractTest)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Some element is not an instance of %s',
+                    AbstractTest::class
+                ));
             }
             
             $this->tests->add($test);
@@ -62,6 +67,12 @@ final class IntegrityCheck
     
     public function run()
     {
-        
+        $response = new Response();
+        foreach ($this->tests as $test) {
+            $test->run();
+            $response->addResults($test->getResults());
+        }
+    
+        $response->out();
     }
 }

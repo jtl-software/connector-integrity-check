@@ -1,7 +1,7 @@
 <?php
 namespace Jtl\Connector\Integrity\Models;
 
-abstract class AbstractModel
+abstract class AbstractModel implements \JsonSerializable
 {
     /**
      * @return string
