@@ -7,6 +7,7 @@ use Jtl\Connector\Integrity\Models\Shop;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
 use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
+use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
 
 final class IntegrityCheck
 {
@@ -101,6 +102,7 @@ final class IntegrityCheck
             case Shop::OXID:
                 break;
             case Shop::WOOCOMMERCE:
+                $this->tests = (new WooCommerceTestLoader())->getTests();
                 break;
         }
     }
