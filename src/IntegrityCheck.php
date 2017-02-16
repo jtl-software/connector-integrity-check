@@ -1,9 +1,12 @@
 <?php
 namespace Jtl\Connector\Integrity;
 
+use Jtl\Connector\Integrity\Models\Http\Request;
 use Jtl\Connector\Integrity\Models\Http\Response;
+use Jtl\Connector\Integrity\Models\Shop;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
+use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
 
 final class IntegrityCheck
 {
@@ -67,6 +70,10 @@ final class IntegrityCheck
     
     public function run()
     {
+        $request = new Request();
+        
+        $this->switchScope($request->getShop());
+        
         $response = new Response();
         foreach ($this->tests as $test) {
             $test->run();
@@ -74,5 +81,27 @@ final class IntegrityCheck
         }
     
         $response->out();
+    }
+    
+    /**
+     * @param string $shop
+     */
+    protected function switchScope($shop)
+    {
+        switch ($shop) {
+            case Shop::SHOPWARE:
+                $this->tests = (new ShopwareTestLoader())->getTests();
+                break;
+            case Shop::GAMBIO:
+                break;
+            case Shop::PRESTA:
+                break;
+            case Shop::MODIFIED:
+                break;
+            case Shop::OXID:
+                break;
+            case Shop::WOOCOMMERCE:
+                break;
+        }
     }
 }

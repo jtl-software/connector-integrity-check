@@ -16,6 +16,4 @@ function integrity()
     return IntegrityCheck::init();
 }
 
-// @TODO: Register your tests
-
 integrity()->run();

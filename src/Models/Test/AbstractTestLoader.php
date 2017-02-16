@@ -17,4 +17,12 @@ abstract class AbstractTestLoader
         $this->tests->add($test);
         return $this;
     }
+    
+    /**
+     * @return TestCollection
+     */
+    public function getTests()
+    {
+        return $this->tests;
+    }
 }
