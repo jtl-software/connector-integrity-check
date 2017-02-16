@@ -6,9 +6,9 @@ use Jtl\Connector\Integrity\Models\Http\Response;
 use Jtl\Connector\Integrity\Models\Shop;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\Data;
-use Jtl\Connector\Integrity\Models\Test\ResultCollection;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
 use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
+use Jtl\Connector\Integrity\Shops\Gambio\GambioTestLoader;
 use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
 
 final class IntegrityCheck
@@ -119,6 +119,7 @@ final class IntegrityCheck
                 $this->tests = (new ShopwareTestLoader())->getTests();
                 break;
             case Shop::GAMBIO:
+                $this->tests = (new GambioTestLoader())->getTests();
                 break;
             case Shop::PRESTA:
                 break;
