@@ -3,12 +3,18 @@
 namespace Jtl\Connector\Integrity\Shops\WooCommerce;
 
 use Jtl\Connector\Integrity\Models\Test\AbstractTestLoader;
-use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\WpPostsTest;
+use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\OrphanCategoriesTest;
+use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\OrphanProductVariationsTest;
 
 class WooCommerceTestLoader extends AbstractTestLoader
 {
     function __construct()
     {
-        $this->addTest(new WpPostsTest(1));
+        parent::__construct();
+
+        $sort = 1;
+
+        $this->addTest(new OrphanProductVariationsTest($sort++));
+        $this->addTest(new OrphanCategoriesTest($sort++));
     }
 }
