@@ -101,9 +101,8 @@
                         this.progress_step = this.progress_step / this.test_count;
 
                         if (this.test_count > 0) {
-                            this.test_sorts.forEach((elem, index, array) => {
-                                this.runTest(elem);
-                            });
+                            var number = this.test_sorts.shift();
+                            this.runTest(number);
                         }
                     });
             },
@@ -119,6 +118,11 @@
                     .then(response => {
                         this.test_results.push(response.data.results);
                         this.progress += this.progress_step;
+
+                        var number = this.test_sorts.shift();
+                        if (typeof(number) !== 'undefined') {
+                            this.runTest(number);
+                        }
                     });
             }
         },

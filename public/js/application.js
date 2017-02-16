@@ -12135,9 +12135,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.progress_step = _this2.progress_step / _this2.test_count;
 
                 if (_this2.test_count > 0) {
-                    _this2.test_sorts.forEach(function (elem, index, array) {
-                        _this2.runTest(elem);
-                    });
+                    var number = _this2.test_sorts.shift();
+                    _this2.runTest(number);
                 }
             });
         },
@@ -12154,6 +12153,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this3.test_results.push(response.data.results);
                 _this3.progress += _this3.progress_step;
+
+                var number = _this3.test_sorts.shift();
+                if (typeof number !== 'undefined') {
+                    _this3.runTest(number);
+                }
             });
         }
     },

@@ -10,6 +10,8 @@ class OSTest extends AbstractTest
 {
     public function run()
     {
+        sleep(2);
+        
         $this->getResults()->add(
             (new Result())->setType(
                 (new TestType(TestType::REQUIREMENTS))
