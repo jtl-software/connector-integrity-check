@@ -22,14 +22,14 @@
 
 <script>
     export default {
-        data () {
+        data() {
             return {
                 progress: 0.0
             }
         },
 
         computed: {
-            style: function () {
+            style: function() {
                 return {
                     width: this.progress + '%'
                 }
@@ -37,11 +37,11 @@
         },
 
         methods: {
-            run: function () {
+            run: function() {
                 this.getData(1);
             },
 
-            getData: function (t) {
+            getData: function(t) {
                 axios.get('api.php', {
                     params: {
                         t: t
@@ -59,7 +59,7 @@
             }
         },
 
-        mounted () {
+        mounted() {
 
         }
     }

@@ -11,6 +11,11 @@ class Data extends AbstractCollectionItem
     protected $message;
     
     /**
+     * @var mixed
+     */
+    protected $value;
+    
+    /**
      * @return string
      */
     public function getMessage()
@@ -33,6 +38,24 @@ class Data extends AbstractCollectionItem
     }
     
     /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+    
+    /**
+     * @param mixed $value
+     * @return Data
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+    
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -42,6 +65,7 @@ class Data extends AbstractCollectionItem
     public function jsonSerialize()
     {
         return [
+            'value' => $this->value,
             'message' => $this->message
         ];
     }

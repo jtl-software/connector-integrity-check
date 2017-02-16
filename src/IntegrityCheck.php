@@ -5,6 +5,8 @@ use Jtl\Connector\Integrity\Models\Http\Request;
 use Jtl\Connector\Integrity\Models\Http\Response;
 use Jtl\Connector\Integrity\Models\Shop;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
+use Jtl\Connector\Integrity\Models\Test\Data;
+use Jtl\Connector\Integrity\Models\Test\ResultCollection;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
 use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
 use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
@@ -74,14 +76,37 @@ final class IntegrityCheck
         $request = new Request();
         
         $this->switchScope($request->getShop());
-        
-        $response = new Response();
-        foreach ($this->tests as $test) {
-            $test->run();
-            $response->addResults($test->getResults());
-        }
+        $response = $this->route($request);
     
         $response->out();
+    }
+    
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    protected function route(Request $request)
+    {
+        $response = new Response();
+        switch ($request->getAction()) {
+            case 'get_tests':
+                $sorts = $this->tests->getSorts();
+                foreach ($sorts as $sort) {
+                    $response->getData()->add(
+                        (new Data())->setValue($sort)
+                    );
+                }
+                break;
+            case 'run_test':
+                /** @var AbstractTest $test */
+                $test = $this->tests->get($request->getNumber());
+                $test->run();
+    
+                $response->setResults($test->getResults());
+                break;
+        }
+        
+        return $response;
     }
     
     /**

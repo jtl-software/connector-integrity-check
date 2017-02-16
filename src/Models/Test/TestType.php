@@ -5,6 +5,16 @@ class TestType implements \JsonSerializable
 {
     const DATABASE = 'db';
     const REQUIREMENTS = 'requirements';
+    const FILES = 'files';
+    
+    /**
+     * @var string[]
+     */
+    protected $types = [
+        self::DATABASE,
+        self::REQUIREMENTS,
+        self::FILES
+    ];
     
     /**
      * @var string
@@ -48,7 +58,7 @@ class TestType implements \JsonSerializable
      */
     protected function checkType($type)
     {
-        if ($type !== self::DATABASE && $type !== self::REQUIREMENTS) {
+        if (!in_array($type, $this->types)) {
             throw new \InvalidArgumentException('Invalid type constant');
         }
     }

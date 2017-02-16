@@ -8,16 +8,21 @@ final class Request
     /**
      * @var string
      */
-    private $shop;
+    private $shop = '';
     
     /**
      * @var int
      */
-    private $number;
+    private $number = 0;
+    
+    /**
+     * @var string
+     */
+    private $action = '';
     
     public function __construct()
     {
-        if (!isset($_GET['t']) && !isset($_GET['s'])) {
+        if (!isset($_GET['a']) || !isset($_GET['s'])) {
             header('HTTP/1.1 400 Bad Request');
             die();
         }
@@ -28,7 +33,8 @@ final class Request
         }
         
         $this->shop = $_GET['s'];
-        $this->number = (int) $_GET['t'];
+        $this->number = isset($_GET['t']) ? (int) $_GET['t'] : 0;
+        $this->action = $_GET['a'];
     }
     
     /**
@@ -45,5 +51,13 @@ final class Request
     public function getNumber()
     {
         return $this->number;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 }

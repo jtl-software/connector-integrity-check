@@ -2,17 +2,40 @@
 namespace Jtl\Connector\Integrity\Models\Http;
 
 use Jtl\Connector\Integrity\Models\AbstractModel;
+use Jtl\Connector\Integrity\Models\Test\DataCollection;
 use Jtl\Connector\Integrity\Models\Test\ResultCollection;
 
 class Response extends AbstractModel
 {
     /**
-     * @var ResultCollection[]
+     * @var DataCollection
      */
-    protected $results = [];
+    protected $data;
     
     /**
-     * @return ResultCollection[]
+     * @var ResultCollection
+     */
+    protected $results;
+    
+    /**
+     * Response constructor.
+     */
+    public function __construct()
+    {
+        $this->data = new DataCollection();
+        $this->results = new ResultCollection();
+    }
+    
+    /**
+     * @return DataCollection
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+    
+    /**
+     * @return ResultCollection
      */
     public function getResults()
     {
@@ -20,19 +43,29 @@ class Response extends AbstractModel
     }
     
     /**
+     * @param DataCollection $collection
+     * @return self
+     */
+    public function setData(DataCollection $data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+    
+    /**
      * @param ResultCollection $collection
      * @return self
      */
-    public function addResults(ResultCollection $collection)
+    public function setResults(ResultCollection $collection)
     {
-        $this->results[] = $collection;
+        $this->results = $collection;
         return $this;
     }
     
     public function out()
     {
         header('Content-Type: application/json');
-        echo json_encode($this->results);
+        echo json_encode($this->jsonSerialize());
     }
     
     /**
@@ -45,7 +78,8 @@ class Response extends AbstractModel
     public function jsonSerialize()
     {
         return [
-            'results' => json_encode($this->results)
+            'data' => $this->data,
+            'results' => $this->results
         ];
     }
 }

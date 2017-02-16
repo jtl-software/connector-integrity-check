@@ -11,6 +11,8 @@ class ShopwareTestLoader extends AbstractTestLoader
      */
     public function __construct()
     {
+        parent::__construct();
+        
         $this->addTest(new ProductPriceTest(1));
     }
 }

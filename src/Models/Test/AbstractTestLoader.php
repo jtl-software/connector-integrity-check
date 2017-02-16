@@ -9,6 +9,14 @@ abstract class AbstractTestLoader
     protected $tests;
     
     /**
+     * AbstractTestLoader constructor.
+     */
+    public function __construct()
+    {
+        $this->tests = new TestCollection();
+    }
+    
+    /**
      * @param AbstractTest $test
      * @return self
      */

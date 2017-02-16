@@ -24,6 +24,7 @@ class Result extends AbstractCollectionItem
     {
         $this->errors = new ErrorCollection();
         $this->data = new DataCollection();
+        $this->type = new TestType(TestType::DATABASE);
         
         parent::__construct($sort);
     }
