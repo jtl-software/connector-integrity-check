@@ -6,5 +6,5 @@ mix.webpackConfig({
     }
 });
 
-mix.js('resources/assets/js/application.js', 'public/js')
-    .sass('resources/assets/sass/application.scss', 'public/css');
+mix.js('resources/assets/js/application.js', 'js')
+    .sass('resources/assets/sass/application.scss', 'css');
