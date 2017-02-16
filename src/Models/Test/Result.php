@@ -116,7 +116,8 @@ class Result extends AbstractCollectionItem
         return [
             'type' => $this->type->getType(),
             'data' => $this->data,
-            'errors' => $this->errors
+            'errors' => $this->errors,
+            'has_errors' => $this->hasErrors()
         ];
     }
 }

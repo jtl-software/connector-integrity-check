@@ -22,18 +22,18 @@ final class Request
     
     public function __construct()
     {
-        if (!isset($_GET['a']) || !isset($_GET['s'])) {
+        if (!isset($_GET['a'])) {
             header('HTTP/1.1 400 Bad Request');
             die();
         }
         
-        if (!in_array($_GET['s'], Shop::shops())) {
+        if (isset($_GET['s']) && !in_array(strtolower($_GET['s']), Shop::shops())) {
             header('HTTP/1.1 406 Not Acceptable');
             die();
         }
         
-        $this->shop = $_GET['s'];
-        $this->number = isset($_GET['t']) ? (int) $_GET['t'] : 0;
+        $this->shop = isset($_GET['s']) ? strtolower($_GET['s']) : '';
+        $this->number = isset($_GET['t']) ? $_GET['t'] : 0;
         $this->action = $_GET['a'];
     }
     

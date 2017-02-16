@@ -3,6 +3,7 @@ namespace Jtl\Connector\Integrity\Models;
 
 final class Shop
 {
+    const SERVER = 'server';
     const SHOPWARE = 'shopware';
     const GAMBIO = 'gambio';
     const PRESTA = 'presta';
@@ -14,6 +15,7 @@ final class Shop
      * @var string[]
      */
     private static $shops = [
+        self::SERVER,
         self::SHOPWARE,
         self::GAMBIO,
         self::PRESTA,

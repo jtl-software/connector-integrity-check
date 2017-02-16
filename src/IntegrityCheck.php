@@ -7,6 +7,7 @@ use Jtl\Connector\Integrity\Models\Shop;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\Data;
 use Jtl\Connector\Integrity\Models\Test\TestCollection;
+use Jtl\Connector\Integrity\Shops\Server\ServerTestLoader;
 use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
 use Jtl\Connector\Integrity\Shops\Gambio\GambioTestLoader;
 use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
@@ -89,15 +90,29 @@ final class IntegrityCheck
     {
         $response = new Response();
         switch ($request->getAction()) {
-            case 'get_tests':
-                $sorts = $this->tests->getSorts();
-                foreach ($sorts as $sort) {
+            case 'get_shops':
+                foreach (Shop::shops() as $shop) {
+                    $response->getData()->add(
+                        (new Data())->setValue(ucfirst($shop))
+                    );
+                }
+                break;
+            case 'get_count':
+                if (empty($request->getShop())) {
+                    throw new \InvalidArgumentException('Parameter s (shop) is required for action get_count');
+                }
+                
+                foreach ($this->tests->getSorts() as $sort) {
                     $response->getData()->add(
                         (new Data())->setValue($sort)
                     );
                 }
                 break;
             case 'run_test':
+                if (empty($request->getShop())) {
+                    throw new \InvalidArgumentException('Parameter s (shop) is required for action get_count');
+                }
+                
                 /** @var AbstractTest $test */
                 $test = $this->tests->get($request->getNumber());
                 $test->run();
@@ -115,6 +130,9 @@ final class IntegrityCheck
     protected function switchScope($shop)
     {
         switch ($shop) {
+            case Shop::SERVER:
+                $this->tests = (new ServerTestLoader())->getTests();
+                break;
             case Shop::SHOPWARE:
                 $this->tests = (new ShopwareTestLoader())->getTests();
                 break;

@@ -12051,10 +12051,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
+            test_count: 0,
+            shop: '',
+            shops: [],
+            tests: [],
             progress: 0.0
         };
     },
@@ -12068,30 +12091,62 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
-    methods: {
-        run: function run() {
-            this.getData(1);
-        },
+    watch: {
+        shop: function shop(val) {
+            this.getCount();
+        }
+    },
 
-        getData: function getData(t) {
+    methods: {
+        getShops: function getShops() {
             var _this = this;
 
             axios.get('api.php', {
                 params: {
-                    t: t
+                    a: 'get_shops'
                 }
             }).then(function (response) {
-                _this.progress = response.data.data.progress;
-                if (!response.data.data.finished) {
-                    _this.getData(++t);
+                _this.shops = response.data.data;
+            });
+        },
+
+        getCount: function getCount() {
+            var _this2 = this;
+
+            axios.get('api.php', {
+                params: {
+                    a: 'get_count',
+                    s: this.shop
                 }
-            }).catch(function (error) {
-                console.log(error);
+            }).then(function (response) {
+                _this2.test_count = response.data.data[0].value;
+
+                if (_this2.test_count > 0) {
+                    for (var i = 1; i <= _this2.test_count; i++) {
+                        _this2.runTest(i);
+                    }
+                }
+            });
+        },
+
+        runTest: function runTest(number) {
+            var _this3 = this;
+
+            axios.get('api.php', {
+                params: {
+                    a: 'run_test',
+                    s: this.shop,
+                    t: number
+                }
+            }).then(function (response) {
+                _this3.tests.push(response.data.results);
             });
         }
     },
 
-    mounted: function mounted() {}
+    mounted: function mounted() {
+        this.getShops();
+    }
 };
 
 /***/ }),
@@ -14517,7 +14572,7 @@ var Component = __webpack_require__(33)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/integrity-check/resources/assets/js/components/Integrity.vue"
+Component.options.__file = "/var/www/connector-integrity/resources/assets/js/components/Integrity.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Integrity.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -14528,9 +14583,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a8b96666", Component.options)
+    hotAPI.createRecord("data-v-d83142b0", Component.options)
   } else {
-    hotAPI.reload("data-v-a8b96666", Component.options)
+    hotAPI.reload("data-v-d83142b0", Component.options)
   }
 })()}
 
@@ -14600,36 +14655,71 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
+    staticClass: "col-md-12"
   }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.test_count == 0),
+      expression: "test_count == 0"
+    }],
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Shop Auswahl")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('div', {
-    staticClass: "progress"
-  }, [_c('div', {
-    staticClass: "progress-bar",
-    style: (_vm.style),
-    attrs: {
-      "role": "progressbar",
-      "aria-valuenow": _vm.progress,
-      "aria-valuemin": "0",
-      "aria-valuemax": "100"
-    }
-  }, [_vm._v("\n                            " + _vm._s(_vm.progress) + "%\n                        ")])]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-default",
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.shop),
+      expression: "shop"
+    }],
     on: {
-      "click": _vm.run
+      "change": function($event) {
+        _vm.shop = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
     }
-  }, [_vm._v("Go")])])])])])])
+  }, _vm._l((_vm.shops), function(s) {
+    return _c('option', {
+      domProps: {
+        "value": s.value
+      }
+    }, [_vm._v("\n                            " + _vm._s(s.value) + "\n                        ")])
+  }))])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.test_count > 0),
+      expression: "test_count > 0"
+    }],
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v(_vm._s(_vm.shop))]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, _vm._l((_vm.tests), function(results) {
+    return _c('table', {
+      staticClass: "table table-striped"
+    }, [_c('tbody', _vm._l((results), function(result) {
+      return _c('tr', [_vm._l((result.data), function(data) {
+        return _c('td', [_vm._v("\n                                    " + _vm._s(data.message) + "\n                                ")])
+      }), _vm._v(" "), _vm._l((result.errors), function(error) {
+        return _c('td', [_vm._v("\n                                    " + _vm._s(error.message) + "\n                                ")])
+      })], 2)
+    }))])
+  }))])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-a8b96666", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-d83142b0", module.exports)
   }
 }
 
