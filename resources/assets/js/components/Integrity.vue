@@ -44,7 +44,7 @@
                                             {{ error.message }}
                                         </td>
                                         <td>
-                                            <span class="label label-success pull-right">
+                                            <span class="label label-danger pull-right">
                                                 <i class="glyphicon glyphicon-remove-sign"></i>
                                                 <span>Yolo</span>
                                             </span>
