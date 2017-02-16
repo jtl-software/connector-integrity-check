@@ -97,9 +97,9 @@ final class IntegrityCheck
                     );
                 }
                 break;
-            case 'get_count':
+            case 'get_sorts':
                 if (empty($request->getShop())) {
-                    throw new \InvalidArgumentException('Parameter s (shop) is required for action get_count');
+                    throw new \InvalidArgumentException('Parameter s (shop) is required for action get_sorts');
                 }
                 
                 foreach ($this->tests->getSorts() as $sort) {
@@ -110,7 +110,7 @@ final class IntegrityCheck
                 break;
             case 'run_test':
                 if (empty($request->getShop())) {
-                    throw new \InvalidArgumentException('Parameter s (shop) is required for action get_count');
+                    throw new \InvalidArgumentException('Parameter s (shop) is required for action run_test');
                 }
                 
                 /** @var AbstractTest $test */
@@ -129,10 +129,7 @@ final class IntegrityCheck
      */
     protected function switchScope($shop)
     {
-        switch ($shop) {
-            case Shop::SERVER:
-                $this->tests = (new ServerTestLoader())->getTests();
-                break;
+        switch (Shop::normalize($shop)) {
             case Shop::SHOPWARE:
                 $this->tests = (new ShopwareTestLoader())->getTests();
                 break;
@@ -149,5 +146,7 @@ final class IntegrityCheck
                 $this->tests = (new WooCommerceTestLoader())->getTests();
                 break;
         }
+    
+        $this->tests->merge((new ServerTestLoader())->getTests());
     }
 }

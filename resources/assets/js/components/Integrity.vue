@@ -19,7 +19,13 @@
                     <div class="panel-heading">{{ shop }}</div>
 
                     <div class="panel-body">
-                        <table class="table table-striped" v-for="results in tests">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" :style="style">
+                                {{ progress }}%
+                            </div>
+                        </div>
+
+                        <table class="table table-striped" v-for="results in test_results">
                             <tbody>
                                 <tr v-for="result in results">
                                     <td v-for="data in result.data">
@@ -43,11 +49,13 @@
     export default {
         data() {
             return {
-                test_count: 0,
                 shop: '',
                 shops: [],
-                tests: [],
-                progress: 0.0
+                test_count: 0,
+                test_sorts: [],
+                test_results: [],
+                progress: 0.0,
+                progress_step: 100
             }
         },
 
@@ -61,7 +69,7 @@
 
         watch: {
             shop: function(val) {
-                this.getCount();
+                this.getSorts();
             }
         },
 
@@ -77,20 +85,25 @@
                     });
             },
 
-            getCount: function() {
+            getSorts: function() {
                 axios.get('api.php', {
                     params: {
-                        a: 'get_count',
+                        a: 'get_sorts',
                         s: this.shop
                     }
                 })
                     .then(response => {
-                        this.test_count = response.data.data[0].value;
+                        response.data.data.forEach((elem, index, array) => {
+                            this.test_sorts.push(elem.value);
+                        });
+
+                        this.test_count = response.data.data.length;
+                        this.progress_step = this.progress_step / this.test_count;
 
                         if (this.test_count > 0) {
-                            for (var i = 1; i <= this.test_count; i++) {
-                                this.runTest(i);
-                            }
+                            this.test_sorts.forEach((elem, index, array) => {
+                                this.runTest(elem);
+                            });
                         }
                     });
             },
@@ -104,7 +117,8 @@
                     }
                 })
                     .then(response => {
-                        this.tests.push(response.data.results);
+                        this.test_results.push(response.data.results);
+                        this.progress += this.progress_step;
                     });
             }
         },

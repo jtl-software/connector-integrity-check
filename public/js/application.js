@@ -12070,15 +12070,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
-            test_count: 0,
             shop: '',
             shops: [],
-            tests: [],
-            progress: 0.0
+            test_count: 0,
+            test_sorts: [],
+            test_results: [],
+            progress: 0.0,
+            progress_step: 100
         };
     },
 
@@ -12093,7 +12101,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     watch: {
         shop: function shop(val) {
-            this.getCount();
+            this.getSorts();
         }
     },
 
@@ -12110,21 +12118,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        getCount: function getCount() {
+        getSorts: function getSorts() {
             var _this2 = this;
 
             axios.get('api.php', {
                 params: {
-                    a: 'get_count',
+                    a: 'get_sorts',
                     s: this.shop
                 }
             }).then(function (response) {
-                _this2.test_count = response.data.data[0].value;
+                response.data.data.forEach(function (elem, index, array) {
+                    _this2.test_sorts.push(elem.value);
+                });
+
+                _this2.test_count = response.data.data.length;
+                _this2.progress_step = _this2.progress_step / _this2.test_count;
 
                 if (_this2.test_count > 0) {
-                    for (var i = 1; i <= _this2.test_count; i++) {
-                        _this2.runTest(i);
-                    }
+                    _this2.test_sorts.forEach(function (elem, index, array) {
+                        _this2.runTest(elem);
+                    });
                 }
             });
         },
@@ -12139,7 +12152,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     t: number
                 }
             }).then(function (response) {
-                _this3.tests.push(response.data.results);
+                _this3.test_results.push(response.data.results);
+                _this3.progress += _this3.progress_step;
             });
         }
     },
@@ -14703,7 +14717,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v(_vm._s(_vm.shop))]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, _vm._l((_vm.tests), function(results) {
+  }, [_c('div', {
+    staticClass: "progress"
+  }, [_c('div', {
+    staticClass: "progress-bar",
+    style: (_vm.style),
+    attrs: {
+      "role": "progressbar",
+      "aria-valuenow": _vm.progress,
+      "aria-valuemin": "0",
+      "aria-valuemax": "100"
+    }
+  }, [_vm._v("\n                            " + _vm._s(_vm.progress) + "%\n                        ")])]), _vm._v(" "), _vm._l((_vm.test_results), function(results) {
     return _c('table', {
       staticClass: "table table-striped"
     }, [_c('tbody', _vm._l((results), function(result) {
@@ -14713,7 +14738,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         return _c('td', [_vm._v("\n                                    " + _vm._s(error.message) + "\n                                ")])
       })], 2)
     }))])
-  }))])])])])
+  })], 2)])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

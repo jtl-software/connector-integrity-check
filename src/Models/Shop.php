@@ -3,19 +3,17 @@ namespace Jtl\Connector\Integrity\Models;
 
 final class Shop
 {
-    const SERVER = 'server';
-    const SHOPWARE = 'shopware';
-    const GAMBIO = 'gambio';
-    const PRESTA = 'presta';
-    const MODIFIED = 'modified';
-    const OXID = 'oxid';
-    const WOOCOMMERCE = 'woocommerce';
+    const SHOPWARE = 'Shopware';
+    const GAMBIO = 'Gambio';
+    const PRESTA = 'Presta';
+    const MODIFIED = 'Modified';
+    const OXID = 'Oxid';
+    const WOOCOMMERCE = 'WooCommerce';
     
     /**
      * @var string[]
      */
     private static $shops = [
-        self::SERVER,
         self::SHOPWARE,
         self::GAMBIO,
         self::PRESTA,
@@ -27,8 +25,30 @@ final class Shop
     /**
      * @return string[]
      */
-    public static function shops()
+    public static function shops($toLower = false)
     {
+        if ($toLower) {
+            return array_map(function($shop) {
+                return strtolower($shop);
+            }, self::$shops);
+        }
+        
         return self::$shops;
+    }
+    
+    /**
+     * @param string $shop
+     * @return string
+     */
+    public static function normalize($shop)
+    {
+        switch (strtolower($shop)) {
+            case 'shopware': return self::SHOPWARE;
+            case 'gambio': return self::GAMBIO;
+            case 'presta': return self::PRESTA;
+            case 'modified': return self::MODIFIED;
+            case 'oxid': return self::OXID;
+            case 'woocommerce': return self::WOOCOMMERCE;
+        }
     }
 }

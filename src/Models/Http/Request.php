@@ -27,7 +27,7 @@ final class Request
             die();
         }
         
-        if (isset($_GET['s']) && !in_array(strtolower($_GET['s']), Shop::shops())) {
+        if (isset($_GET['s']) && !in_array(strtolower($_GET['s']), Shop::shops(true))) {
             header('HTTP/1.1 406 Not Acceptable');
             die();
         }

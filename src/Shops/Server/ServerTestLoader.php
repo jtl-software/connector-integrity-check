@@ -13,6 +13,6 @@ class ServerTestLoader extends AbstractTestLoader
     {
         parent::__construct();
         
-        $this->addTest(new OSTest(1));
+        $this->addTest(new OSTest(-1));
     }
 }

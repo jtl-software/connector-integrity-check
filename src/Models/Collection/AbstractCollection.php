@@ -111,6 +111,14 @@ abstract class AbstractCollection implements CollectionInterface, \Countable,
     }
     
     /**
+     * @return AbstractCollectionItem[]
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+    
+    /**
      * @param callable $callable - func(AbstractCollectionItem $item)
      */
     public function walk(Callable $callable)
@@ -118,6 +126,24 @@ abstract class AbstractCollection implements CollectionInterface, \Countable,
         foreach ($this->items as $item) {
             $callable($item);
         }
+    }
+    
+    /**
+     * @param AbstractCollection $collection
+     */
+    public function merge(AbstractCollection $collection)
+    {
+        foreach ($collection->getItems() as $item) {
+            $this->items[$item->getSort()] = $item;
+        }
+        
+        usort($this->items, function(AbstractCollectionItem $a, AbstractCollectionItem $b) {
+            if ($a->getSort() == $b->getSort()) {
+                return 0;
+            }
+            
+            return $a->getSort() < $b->getSort() ? -1 : 1;
+        });
     }
     
     /**
