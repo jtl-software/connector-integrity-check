@@ -20,23 +20,39 @@
 
                     <div class="panel-body">
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" :style="style">
-                                {{ progress }}%
+                            <div class="progress-bar" role="progressbar" :aria-valuenow="round(progress)" aria-valuemin="0" aria-valuemax="100" :style="style">
+                                {{ round(progress) }}%
                             </div>
                         </div>
 
-                        <table class="table table-striped" v-for="results in test_results">
-                            <tbody>
-                                <tr v-for="result in results">
-                                    <td v-for="data in result.data">
-                                        {{ data.message }}
-                                    </td>
-                                    <td v-for="error in result.errors">
-                                        {{ error.message }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div v-for="results in test_results">
+                            <table class="table table-striped" v-for="result in results">
+                                <tbody>
+                                    <tr v-for="data in result.data">
+                                        <td>
+                                            {{ data.message }}
+                                        </td>
+                                        <td>
+                                            <span class="label label-success pull-right">
+                                                <i class="glyphicon glyphicon-ok-sign"></i>
+                                                <span>Yolo</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr v-for="error in result.errors">
+                                        <td>
+                                            {{ error.message }}
+                                        </td>
+                                        <td>
+                                            <span class="label label-success pull-right">
+                                                <i class="glyphicon glyphicon-remove-sign"></i>
+                                                <span>Yolo</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -62,7 +78,7 @@
         computed: {
             style: function() {
                 return {
-                    width: this.progress + '%'
+                    width: Math.round(this.progress) + '%'
                 }
             }
         },
@@ -74,6 +90,10 @@
         },
 
         methods: {
+            round: function(value) {
+                return Math.round(value);
+            },
+
             getShops: function() {
                 axios.get('api.php', {
                     params: {

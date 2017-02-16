@@ -6,18 +6,16 @@ use Jtl\Connector\Integrity\Models\Test\Data;
 use Jtl\Connector\Integrity\Models\Test\Result;
 use Jtl\Connector\Integrity\Models\Test\TestType;
 
-class OSTest extends AbstractTest
+class PHPTest extends AbstractTest
 {
     public function run()
     {
-        sleep(1);
-        
         $this->getResults()->add(
             (new Result())->setType(
                 (new TestType(TestType::REQUIREMENTS))
             )
                 ->addData(
-                    (new Data())->setMessage('OS ok')
+                    (new Data())->setMessage('PHP ok')
                 )
         );
     }
