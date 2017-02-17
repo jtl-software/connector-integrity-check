@@ -12092,6 +12092,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12179,6 +12184,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.runTest(number);
                 }
             });
+        },
+
+        refresh: function refresh() {
+            this.test_count = 0;
+            this.test_sorts = [];
+            this.test_results = [];
+            this.progress = 0.0;
+            this.progress_step = 100;
+
+            this.getSorts();
         }
     },
 
@@ -12192,8 +12207,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(8);
-
-//require('bootstrap-sass');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12226,7 +12239,7 @@ var Component = __webpack_require__(32)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/connector-integrity/resources/assets/js/components/Integrity.vue"
+Component.options.__file = "/var/www/html/woocommerce/integrity-check/resources/assets/js/components/Integrity.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Integrity.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -12237,9 +12250,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d83142b0", Component.options)
+    hotAPI.createRecord("data-v-a8b96666", Component.options)
   } else {
-    hotAPI.reload("data-v-d83142b0", Component.options)
+    hotAPI.reload("data-v-a8b96666", Component.options)
   }
 })()}
 
@@ -12314,8 +12327,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.test_count == 0),
-      expression: "test_count == 0"
+      value: (!_vm.shop),
+      expression: "!shop"
     }],
     staticClass: "panel panel-default"
   }, [_c('div', {
@@ -12329,6 +12342,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.shop),
       expression: "shop"
     }],
+    staticClass: "form-control",
     on: {
       "change": function($event) {
         _vm.shop = Array.prototype.filter.call($event.target.options, function(o) {
@@ -12349,13 +12363,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.test_count > 0),
-      expression: "test_count > 0"
+      value: (_vm.shop),
+      expression: "shop"
     }],
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v(_vm._s(_vm.shop))]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    " + _vm._s(_vm.shop) + "\n                    "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.progress == 100),
+      expression: "progress == 100"
+    }],
+    staticClass: "btn btn-xs btn-primary pull-right",
+    on: {
+      "click": _vm.refresh
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-refresh"
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_c('div', {
     staticClass: "progress"
@@ -12387,7 +12414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', [_vm._v("Yolo")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('td', [_c('span', {
-    staticClass: "label label-success pull-right"
+    staticClass: "label label-danger pull-right"
   }, [_c('i', {
     staticClass: "glyphicon glyphicon-remove-sign"
   }), _vm._v(" "), _c('span', [_vm._v("Yolo")])])])
@@ -12396,7 +12423,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-d83142b0", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-a8b96666", module.exports)
   }
 }
 

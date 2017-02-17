@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="panel panel-default" v-show="test_count == 0">
+                <div class="panel panel-default" v-show="!shop">
                     <div class="panel-heading">Shop Auswahl</div>
 
                     <div class="panel-body">
-                        <select v-model="shop">
+                        <select class="form-control" v-model="shop">
                             <option v-for="s in shops" :value="s.value">
                                 {{ s.value }}
                             </option>
@@ -15,8 +15,13 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default" v-show="test_count > 0">
-                    <div class="panel-heading">{{ shop }}</div>
+                <div class="panel panel-default" v-show="shop">
+                    <div class="panel-heading">
+                        {{ shop }}
+                        <button v-show="progress == 100" class="btn btn-xs btn-primary pull-right" @click="refresh">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </button>
+                    </div>
 
                     <div class="panel-body">
                         <div class="progress">
@@ -144,6 +149,16 @@
                             this.runTest(number);
                         }
                     });
+            },
+
+            refresh () {
+                this.test_count = 0;
+                this.test_sorts = [];
+                this.test_results = [];
+                this.progress = 0.0;
+                this.progress_step = 100;
+
+                this.getSorts();
             }
         },
 
