@@ -36,7 +36,7 @@
                                     <td width="50%">
                                         <div class="test-name">
                                             <strong>{{ result.name }}</strong><br>
-                                            <p class="hidden-xs expandable">{{ result.description }}</p>
+                                            <p class="hidden-xs expandable" v-html="result.description"></p>
                                         </div>
                                     </td>
 

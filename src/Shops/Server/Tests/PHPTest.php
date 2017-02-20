@@ -155,7 +155,8 @@ class PHPTest extends AbstractTest
      */
     private function checkJsonExtension()
     {
-        $result = (new Result())->setName('PHP JSON-Extension');
+        $result = (new Result())->setName('PHP JSON-Extension')
+            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für das JSON-Format.<br>In neueren Debian-PHP-Paketen wird die Unterstützung für JSON standardmäßig nicht mehr mitinstalliert. Hierfür ist die Installation des Pakets <code>php5-json</code> erforderlich.');
     
         if (!function_exists('json_encode') || !function_exists('json_decode')) {
             $result->setError(
@@ -172,7 +173,8 @@ class PHPTest extends AbstractTest
      */
     private function checkPharExtension()
     {
-        $result = (new Result())->setName('PHP Phar-Extension');
+        $result = (new Result())->setName('PHP Phar-Extension')
+            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für Phar, die korrekt konfiguriert sein muss.Phar muss z. B. in der Suhosin-Executor-Whitelist erlaubt sein.');
     
         $check = true;
         if (!class_exists('Phar')) {
@@ -201,7 +203,9 @@ class PHPTest extends AbstractTest
      */
     private function checkSQLite3Extension()
     {
-        $result = (new Result())->setName('PHP SQLite3-Extension');
+        $result = (new Result())->setName('PHP SQLite3-Extension')
+            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für SQLite3.<br>
+Hierfür ist unter Debian z.B. die Installation des Pakets <code>php5-sqlite</code> erforderlich.');
         
         if (!class_exists('Sqlite3')) {
             $result->setError(
@@ -218,7 +222,9 @@ class PHPTest extends AbstractTest
      */
     private function checkZipExtension()
     {
-        $result = (new Result())->setName('PHP ZIP-Extension');
+        $result = (new Result())->setName('PHP ZIP-Extension')
+            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für die Erstellung von ZIP-Archiven.<br>
+Dies kann z.B. durch Eingabe von <code>pecl install zip</code> erreicht werden.');
         
         if (!extension_loaded('zip') || !class_exists('ZipArchive')) {
             $result->setError(
