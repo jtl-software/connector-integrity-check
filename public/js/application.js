@@ -12092,6 +12092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12192,8 +12193,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(8);
-
-//require('bootstrap-sass');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12369,29 +12368,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-valuemax": "100"
     }
   }, [_vm._v("\n                            " + _vm._s(_vm.round(_vm.progress)) + "%\n                        ")])]), _vm._v(" "), _vm._l((_vm.test_results), function(results) {
-    return _c('div', _vm._l((results), function(result) {
-      return _c('table', {
-        staticClass: "table table-striped"
-      }, [_c('tbody', [_vm._l((result.data), function(data) {
-        return _c('tr', [_c('td', [_vm._v("\n                                        " + _vm._s(data.message) + "\n                                    ")]), _vm._v(" "), _vm._m(0, true)])
-      }), _vm._v(" "), _vm._l((result.errors), function(error) {
-        return _c('tr', [_c('td', [_vm._v("\n                                        " + _vm._s(error.message) + "\n                                    ")]), _vm._v(" "), _vm._m(1, true)])
-      })], 2)])
-    }))
+    return _c('table', {
+      staticClass: "table table-striped"
+    }, [_c('tbody', _vm._l((results), function(result) {
+      return _c('tr', [_c('td', {
+        attrs: {
+          "width": "50%"
+        }
+      }, [_c('div', {
+        staticClass: "test-name"
+      }, [_c('strong', [_vm._v(_vm._s(result.name))]), _c('br'), _vm._v(" "), _c('p', {
+        staticClass: "hidden-xs expandable"
+      }, [_vm._v(_vm._s(result.description))])])]), _vm._v(" "), _c('td', {
+        attrs: {
+          "width": "25%"
+        }
+      }, [(result.data && result.data.expected) ? _c('span', [_vm._v(_vm._s(result.data.expected))]) : _vm._e()]), _vm._v(" "), _c('td', {
+        attrs: {
+          "width": "25%"
+        }
+      }, [(!result.has_error) ? _c('button', {
+        staticClass: "btn btn-test-result btn-success btn-xs",
+        attrs: {
+          "type": "button"
+        }
+      }, [_c('i', {
+        staticClass: "glyphicon glyphicon-ok"
+      })]) : _c('button', {
+        staticClass: "btn btn-test-result btn-danger btn-xs",
+        attrs: {
+          "type": "button"
+        }
+      }, [_c('i', {
+        staticClass: "glyphicon glyphicon-ok"
+      })]), _vm._v(" "), (result.data && result.data.actual) ? _c('span', [_vm._v(_vm._s(result.data.actual))]) : _vm._e(), _vm._v(" "), (result.error && result.error.message) ? _c('p', {
+        staticClass: "expandable"
+      }, [_vm._v(_vm._s(result.error.message))]) : _vm._e()])])
+    }))])
   })], 2)])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('span', {
-    staticClass: "label label-success pull-right"
-  }, [_c('i', {
-    staticClass: "glyphicon glyphicon-ok-sign"
-  }), _vm._v(" "), _c('span', [_vm._v("Yolo")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('span', {
-    staticClass: "label label-success pull-right"
-  }, [_c('i', {
-    staticClass: "glyphicon glyphicon-remove-sign"
-  }), _vm._v(" "), _c('span', [_vm._v("Yolo")])])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

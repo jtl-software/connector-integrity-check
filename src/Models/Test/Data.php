@@ -6,36 +6,19 @@ use Jtl\Connector\Integrity\Models\Collection\AbstractCollectionItem;
 class Data extends AbstractCollectionItem
 {
     /**
-     * @var string
-     */
-    protected $message;
-    
-    /**
      * @var mixed
      */
     protected $value;
     
     /**
-     * @return string
+     * @var string
      */
-    public function getMessage()
-    {
-        return $this->message;
-    }
+    protected $expected = '';
     
     /**
-     * @param string $message
-     * @return Data
+     * @var string
      */
-    public function setMessage($message)
-    {
-        if (!is_string($message)) {
-            throw new \InvalidArgumentException('Parameter message must be a string');
-        }
-        
-        $this->message = $message;
-        return $this;
-    }
+    protected $actual = '';
     
     /**
      * @return mixed
@@ -56,6 +39,50 @@ class Data extends AbstractCollectionItem
     }
     
     /**
+     * @return string
+     */
+    public function getExpected()
+    {
+        return $this->expected;
+    }
+    
+    /**
+     * @param string $expected
+     * @return Data
+     */
+    public function setExpected($expected)
+    {
+        if (!is_string($expected)) {
+            throw new \InvalidArgumentException('Parameter expected must be a string');
+        }
+        
+        $this->expected = $expected;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getActual()
+    {
+        return $this->actual;
+    }
+    
+    /**
+     * @param string $actual
+     * @return Data
+     */
+    public function setActual($actual)
+    {
+        if (!is_string($actual)) {
+            throw new \InvalidArgumentException('Parameter actual must be a string');
+        }
+        
+        $this->actual = $actual;
+        return $this;
+    }
+    
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -66,7 +93,8 @@ class Data extends AbstractCollectionItem
     {
         return [
             'value' => $this->value,
-            'message' => $this->message
+            'expected' => $this->expected,
+            'actual' => $this->actual
         ];
     }
 }

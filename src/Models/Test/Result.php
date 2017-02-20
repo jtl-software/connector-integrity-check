@@ -6,80 +6,108 @@ use Jtl\Connector\Integrity\Models\Collection\AbstractCollectionItem;
 class Result extends AbstractCollectionItem
 {
     /**
-     * @var TestType
+     * @var string
      */
-    protected $type;
+    protected $name = '';
     
     /**
-     * @var ErrorCollection
+     * @var string
      */
-    protected $errors;
+    protected $description = '';
     
     /**
-     * @var DataCollection
+     * @var bool
+     */
+    protected $has_error = false;
+    
+    /**
+     * @var Error
+     */
+    protected $error;
+    
+    /**
+     * @var Data
      */
     protected $data;
     
     public function __construct($sort = 0)
     {
-        $this->errors = new ErrorCollection();
-        $this->data = new DataCollection();
-        $this->type = new TestType(TestType::DATABASE);
-        
         parent::__construct($sort);
     }
     
     /**
-     * @return TestType
+     * @return string
      */
-    public function getType()
+    public function getName()
     {
-        return $this->type;
+        return $this->name;
     }
     
     /**
-     * @param TestType $type
+     * @param string $name
      * @return Result
-     * @throws \InvalidArgumentException
      */
-    public function setType($type)
+    public function setName($name)
     {
-        if (!($type instanceof TestType)) {
-            throw new \InvalidArgumentException(sprintf('Parameter type must be an instance of %s', TestType::class));
-        }
-        
-        $this->type = $type;
+        $this->name = $name;
         return $this;
     }
     
     /**
-     * @return ErrorCollection
+     * @return string
      */
-    public function getErrors()
+    public function getDescription()
     {
-        return $this->errors;
+        return $this->description;
     }
     
     /**
-     * @param Error $error
-     * @return self
+     * @param string $description
+     * @return Result
      */
-    public function addError(Error $error)
+    public function setDescription($description)
     {
-        $this->errors->add($error);
+        $this->description = $description;
         return $this;
     }
     
     /**
      * @return bool
      */
-    public function hasErrors()
+    public function hasError()
     {
-        return count($this->errors) > 0;
+        return $this->has_error;
     }
     
     /**
-     * @return DataCollection
+     * @return Error
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+    
+    /**
+     * @param Error $error
+     * @return Result
+     */
+    public function setError($error)
+    {
+        if (!($error instanceof Error)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Expected parameter error to be %s, got %s',
+                Error::class,
+                is_object($error) ? get_class($error) : gettype($error)
+            ));
+        }
+        
+        $this->error = $error;
+        $this->has_error = !is_null($error);
+        return $this;
+    }
+    
+    /**
+     * @return Data
      */
     public function getData()
     {
@@ -88,20 +116,20 @@ class Result extends AbstractCollectionItem
     
     /**
      * @param Data $data
-     * @return self
+     * @return Result
      */
-    public function addData(Data $data)
+    public function setData($data)
     {
-        $this->data->add($data);
+        if (!($data instanceof Data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Expected parameter data to be %s, got %s',
+                Data::class,
+                is_object($data) ? get_class($data) : gettype($data)
+            ));
+        }
+        
+        $this->data = $data;
         return $this;
-    }
-    
-    /**
-     * @return bool
-     */
-    public function hasData()
-    {
-        return count($this->data) > 0;
     }
     
     /**
@@ -114,10 +142,11 @@ class Result extends AbstractCollectionItem
     public function jsonSerialize()
     {
         return [
-            'type' => $this->type->getType(),
+            'name' => $this->name,
+            'description' => $this->description,
             'data' => $this->data,
-            'errors' => $this->errors,
-            'has_errors' => $this->hasErrors()
+            'error' => $this->error,
+            'has_error' => $this->has_error
         ];
     }
 }
