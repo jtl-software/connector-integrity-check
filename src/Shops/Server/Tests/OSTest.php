@@ -28,8 +28,6 @@ class OSTest extends AbstractTest
     
     public function run()
     {
-        sleep(1);
-        
         $this->checkOS();
     }
     

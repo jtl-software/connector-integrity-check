@@ -1,21 +1,18 @@
 <?php
 namespace Jtl\Connector\Integrity\Shops\Shopware\Tests;
 
-use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 use Jtl\Connector\Integrity\Models\Test\Result;
 
-class ProductPriceTest extends AbstractTest
+class ProductPriceTest extends AbstractShopwareTest
 {
     public function run()
     {
-        sleep(2);
-        
         $this->checkMissingPrices();
     }
     
-    protected function checkMissingPrices()
+    private function checkMissingPrices()
     {
-        $result = (new Result())->setName('Shopware missing product prices');
+        $result = (new Result())->setName('Shopware Produktpreise für Kundengruppen');
     
         $this->getResults()->add($result);
     }
