@@ -24,22 +24,24 @@ class OrphanProductVariationsTest extends BaseTest
         ));
 
         $result = new Result($this->sort);
-        $result->setType(new TestType(TestType::DATABASE));
+        $result->setName('Kindartikel ohne Vaterartikel');
+        $result->setDescription('Kindartikel verweisen auf einen Vaterartikel, der nicht mehr existiert.');
 
-        if (empty($orphans)) {
-            $data = new Data();
-            $data->setMessage('Kein Kindartikel ohne Vaterartikel gefunden');
-            $result->addData($data);
-        } else {
+        if (!empty($orphans)) {
+            $messages = [];
+
             foreach ($orphans as $orphan) {
-                $error = new Error();
-                $error->setCode(self::ERROR_CODE_DATA_INCONSISTENCY);
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Der Vateratikel (%d) von "%s" (%d) existiert nicht',
                     $orphan->post_parent, $orphan->post_title, $orphan->ID
-                ));
-                $result->addError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Löschen Sie die Kindartikel.');
+            $result->setError($error);
         }
 
         $this->results->add($result);

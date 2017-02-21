@@ -27,22 +27,24 @@ class OrphanCategoriesTest extends BaseTest
         ));
 
         $result = new Result($this->sort);
-        $result->setType(new TestType(TestType::DATABASE));
+        $result->setName('Kategorien mit gelöschter Oberkategorie');
+        $result->setDescription('Kategorien verweisen auf eine Oberkategorie, die nicht mehr existiert.');
 
-        if (empty($orphans)) {
-            $data = new Data();
-            $data->setMessage('Keine Unterkategorie mit nicht existenter Oberkategorie gefunden');
-            $result->addData($data);
-        } else {
+        if (!empty($orphans)) {
+            $messages = [];
+
             foreach ($orphans as $orphan) {
-                $error = new Error();
-                $error->setCode(self::ERROR_CODE_DATA_INCONSISTENCY);
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Die Oberkategorie (%d) von "%s" (%d) existiert nicht',
                     $orphan->parent, $orphan->name, $orphan->term_id
-                ));
-                $result->addError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Ordnen Sie den Kategorien eine neue Oberkategorie zu oder machen Sie die Kategorien zu Root Kategorien.');
+            $result->setError($error);
         }
 
         $this->results->add($result);
