@@ -1,0 +1,84 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    background: #f4f4f4 url(../images/pageBackground.png) repeat-x;
+
+    font-family: 'Open Sans',Verdana,Arial,sans-serif;
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ubuntu',sans-serif;
+    font-weight: normal;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+a.logo {
+    display: block;
+    font-size: 0px;
+    margin-bottom: 20px;
+}
+
+.navbar[role=navigation] {
+    height: 40px;
+    min-height: 40px;
+}
+
+.navbar.navbar-transparent {
+    background: transparent;
+    border: 0px none;
+}
+
+caption {
+    font-size: 18px;
+    text-align: left;
+}
+
+.btn-test-result {
+    margin-right: 5px;
+}
+
+th {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+div.test-name strong {
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+    .navbar-toggle {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        margin-right: 0px;
+    }
+
+    .navbar-collapse {
+        background: #ededed;
+    }
+
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: #000000;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar .nav > li > a {
+        color: #ddd;
+        text-shadow: 1px 1px 1px #222;
+    }
+
+    .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
