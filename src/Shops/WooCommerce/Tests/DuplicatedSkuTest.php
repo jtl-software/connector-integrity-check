@@ -28,25 +28,23 @@ class DuplicatedSkuTest extends BaseTest
         ));
 
         $result = new Result($this->sort);
-        $result->setType(new TestType(TestType::DATABASE));
+        $result->setName('Doppelte SKUs');
+        $result->setDescription('JTL-Wawi erlaubt keine doppelten SKUs.');
 
-        if (empty($duplicates)) {
-            $data = new Data();
-            $data->setMessage('Keine doppelten SKUs gefunden');
-            $result->addData($data);
-        } else {
+        if (!empty($duplicates)) {
             $skuDuplicates = [];
             foreach ($duplicates as $duplicate) {
                 $skuDuplicates[$duplicate->meta_value][] = $duplicate->post_id;
             }
             foreach ($skuDuplicates as $sku => $productIds) {
                 $error = new Error();
-                $error->setCode(self::ERROR_CODE_DATA_INCONSISTENCY);
                 $error->setMessage(sprintf(
                     'Die SKU "%s" wird von mehreren Produkten verwendet: %s',
                     $sku, implode(", ", $productIds)
                 ));
-                $result->addError($error);
+                $error->setLevel(Error::LEVEL_CRITICAL);
+                $error->setSolution('Eindeutige SKUs für alle Artikel vergeben.');
+                $result->setError($error);
             }
         }
 

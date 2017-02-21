@@ -29,25 +29,19 @@ class VarCombiChildrenWithSimpleFather extends BaseTest
         ));
 
         $result = new Result($this->sort);
-        $result->setType(new TestType(TestType::DATABASE));
 
-        if (empty($childProducts)) {
-            $data = new Data();
-            $data->setMessage('Keine Kindartikel mit einfachen Vaterartikeln');
-            $result->addData($data);
-        } else {
+        if (!empty($childProducts)) {
             $parentChildren = [];
             foreach ($childProducts as $child) {
                 $parentChildren[$child->post_parent][] = $child->ID;
             }
             foreach ($parentChildren as $parent => $children) {
                 $error = new Error();
-                $error->setCode(self::ERROR_CODE_DATA_INCONSISTENCY);
                 $error->setMessage(sprintf(
                     'Einfacher Artikel "%d" hat noch folgende veraltete Kindartikel: %s',
                     $parent, implode(", ", $children)
                 ));
-                $result->addError($error);
+                $result->setError($error);
             }
         }
 
