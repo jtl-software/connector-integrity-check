@@ -6,6 +6,7 @@ use Jtl\Connector\Integrity\Models\Test\AbstractTestLoader;
 use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\DuplicatedSkuTest;
 use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\OrphanCategoriesTest;
 use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\OrphanProductVariationsTest;
+use Jtl\Connector\Integrity\Shops\WooCommerce\Tests\VarCombiChildrenWithSimpleFather;
 
 class WooCommerceTestLoader extends AbstractTestLoader
 {
@@ -18,5 +19,6 @@ class WooCommerceTestLoader extends AbstractTestLoader
         $this->addTest(new DuplicatedSkuTest($sort++));
         $this->addTest(new OrphanProductVariationsTest($sort++));
         $this->addTest(new OrphanCategoriesTest($sort++));
+        $this->addTest(new VarCombiChildrenWithSimpleFather($sort++));
     }
 }
