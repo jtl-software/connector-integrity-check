@@ -32,20 +32,25 @@ class DuplicatedSkuTest extends BaseTest
         $result->setDescription('JTL-Wawi erlaubt keine doppelten SKUs.');
 
         if (!empty($duplicates)) {
+            $messages = [];
             $skuDuplicates = [];
+
             foreach ($duplicates as $duplicate) {
                 $skuDuplicates[$duplicate->meta_value][] = $duplicate->post_id;
             }
+
             foreach ($skuDuplicates as $sku => $productIds) {
-                $error = new Error();
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Die SKU "%s" wird von mehreren Produkten verwendet: %s',
                     $sku, implode(", ", $productIds)
-                ));
-                $error->setLevel(Error::LEVEL_CRITICAL);
-                $error->setSolution('Eindeutige SKUs für alle Artikel vergeben.');
-                $result->setError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Vergeben Sie eindeutige SKUs für alle Artikel.');
+            $result->setError($error);
         }
 
         $this->results->add($result);

@@ -25,17 +25,23 @@ class OrphanProductVariationsTest extends BaseTest
 
         $result = new Result($this->sort);
         $result->setName('Kindartikel ohne Vaterartikel');
-        $result->setDescription('Kindartikel die einen Verweis auf einen Vaterartikel haben, der nicht mehr existiert.');
+        $result->setDescription('Kindartikel verweisen auf einen Vaterartikel, der nicht mehr existiert.');
 
         if (!empty($orphans)) {
+            $messages = [];
+
             foreach ($orphans as $orphan) {
-                $error = new Error();
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Der Vateratikel (%d) von "%s" (%d) existiert nicht',
                     $orphan->post_parent, $orphan->post_title, $orphan->ID
-                ));
-                $result->setError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Löschen Sie die Kindartikel.');
+            $result->setError($error);
         }
 
         $this->results->add($result);

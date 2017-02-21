@@ -29,20 +29,29 @@ class VarCombiChildrenWithSimpleFather extends BaseTest
         ));
 
         $result = new Result($this->sort);
+        $result->setName('Kindartikel mit "einfachem" Vaterartikel');
+        $result->setDescription('Kindartikel verweisen auf einen Vaterartikelm, der mittlerweile nur noch ein "einfacher" Artikel ist.');
 
         if (!empty($childProducts)) {
+            $messages = [];
             $parentChildren = [];
+
             foreach ($childProducts as $child) {
                 $parentChildren[$child->post_parent][] = $child->ID;
             }
+
             foreach ($parentChildren as $parent => $children) {
-                $error = new Error();
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Einfacher Artikel "%d" hat noch folgende veraltete Kindartikel: %s',
                     $parent, implode(", ", $children)
-                ));
-                $result->setError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Löschen Sie die Kindartikel.');
+            $result->setError($error);
         }
 
         $this->results->add($result);

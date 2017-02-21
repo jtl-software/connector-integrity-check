@@ -28,19 +28,23 @@ class OrphanCategoriesTest extends BaseTest
 
         $result = new Result($this->sort);
         $result->setName('Kategorien mit gelöschter Oberkategorie');
-        $result->setDescription('Oberkategorie zu einer Kategorie muss existieren.');
+        $result->setDescription('Kategorien verweisen auf eine Oberkategorie, die nicht mehr existiert.');
 
         if (!empty($orphans)) {
+            $messages = [];
+
             foreach ($orphans as $orphan) {
-                $error = new Error();
-                $error->setMessage(sprintf(
+                $messages[] = sprintf(
                     'Die Oberkategorie (%d) von "%s" (%d) existiert nicht',
                     $orphan->parent, $orphan->name, $orphan->term_id
-                ));
-                $error->setLevel(Error::LEVEL_CRITICAL);
-                $error->setSolution('Ordnen Sie den Kategorien eine neue Oberkategorie zu oder machen setzen Sie das Level der KAtegorien hoch.');
-                $result->setError($error);
+                );
             }
+
+            $error = new Error();
+            $error->setMessage(implode('<br>', $messages));
+            $error->setLevel(Error::LEVEL_CRITICAL);
+            $error->setSolution('Ordnen Sie den Kategorien eine neue Oberkategorie zu oder machen Sie die Kategorien zu Root Kategorien.');
+            $result->setError($error);
         }
 
         $this->results->add($result);
