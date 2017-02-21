@@ -13,11 +13,14 @@ class PHPTest extends AbstractTest
         /**
          * Base
          */
+        $this->checkSapi();
         $this->checkVersion();
         $this->checkMemoryLimit();
         $this->checkExecutionTime();
         $this->checkPostMaxSize();
         $this->checkUploadMaxFileSize();
+        $this->checkSafeMode();
+        $this->checkTempDir();
         
         /**
          * Extensions
@@ -43,6 +46,41 @@ class PHPTest extends AbstractTest
             default:
                 return $shorthand;
         }
+    }
+    
+    /**
+     * Sapi
+     */
+    private function checkSapi()
+    {
+        $sapi = PHP_SAPI;
+        $sapi_names = array(
+            'apache' => 'Apache',
+            'apache2filter' => 'Apache 2.0',
+            'apache2handler' => 'Apache 2.0',
+            'cgi' => 'CGI',
+            'cgi-fcgi' => 'FastCGI',
+            'fpm' => 'FPM'
+        );
+    
+        if (function_exists('fastcgi_finish_request')) {
+            $sapi = 'fpm';
+        }
+    
+        $result = (new Result())->setName('PHP-SAPI')
+            ->setData(
+                (new Data())->setExpected('Apache2, FastCGI, FPM')
+                    ->setActual($sapi_names[$sapi])
+            );
+        
+        if (!in_array($sapi, array('apache', 'apache2filter', 'apache2handler', 'cgi-fcgi', 'fpm'))) {
+            $result->setError(
+                (new Error())->setMessage('PHP-SAPI falsch')
+                    ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
+            );
+        }
+        
+        $this->getResults()->add($result);
     }
     
     /**
@@ -144,6 +182,58 @@ class PHPTest extends AbstractTest
             $result->setError(
                 (new Error())->setMessage('PHP upload_max_filesize zu niedrig')
                     ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
+            );
+        }
+        
+        $this->getResults()->add($result);
+    }
+    
+    /**
+     * Safe mode
+     */
+    private function checkSafeMode()
+    {
+        $safe_mode = (bool) ini_get('safe_mode');
+        
+        $result = (new Result())->setName('PHP safe_mode')
+            ->setData(
+                (new Data())->setExpected('off')
+                    ->setActual($safe_mode ? 'on' : 'off')
+            );
+        
+        if ($safe_mode) {
+            $result->setError(
+                (new Error())->setMessage('PHP safe_mode aktiv')
+                    ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
+            );
+        }
+        
+        $this->getResults()->add($result);
+    }
+    
+    /**
+     * Temp directory
+     */
+    private function checkTempDir()
+    {
+        $temp_dir = sys_get_temp_dir();
+        $writeable = is_writable($temp_dir);
+        
+        $result = (new Result())->setName('PHP writable_temp_dir')
+            ->setDescription(sprintf(
+                'Das temporäre Verzeichnis (<code>%s</code>), das für PHP konfiguriert wurde, sollte beschreibbar sein',
+                $temp_dir
+            ))
+            ->setData(
+                (new Data())->setExpected('ja')
+                    ->setActual($writeable ? 'ja' : 'nein')
+            );
+        
+        if (!$writeable) {
+            $result->setError(
+                (new Error())->setMessage('PHP writable_temp_dir ')
+                    ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
+                    ->setLevel(Error::LEVEL_WARNING)
             );
         }
         
