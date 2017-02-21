@@ -5,10 +5,8 @@ use Jtl\Connector\Integrity\Models\Collection\AbstractCollectionItem;
 
 class Error extends AbstractCollectionItem
 {
-    /**
-     * @var int
-     */
-    protected $code;
+    const LEVEL_CRITICAL = 1;
+    const LEVEL_WARNING = 2;
     
     /**
      * @var string
@@ -16,27 +14,14 @@ class Error extends AbstractCollectionItem
     protected $message;
     
     /**
-     * @return int
+     * @var string
      */
-    public function getCode()
-    {
-        return $this->code;
-    }
+    protected $solution;
     
     /**
-     * @param int $code
-     * @return Error
-     * @throws \InvalidArgumentException
+     * @var int
      */
-    public function setCode($code)
-    {
-        if (!is_int($code)) {
-            throw new \InvalidArgumentException('Parameter code must be an integer');
-        }
-        
-        $this->code = $code;
-        return $this;
-    }
+    protected $level = self::LEVEL_CRITICAL;
     
     /**
      * @return string
@@ -49,7 +34,6 @@ class Error extends AbstractCollectionItem
     /**
      * @param string $message
      * @return Error
-     * @throws \InvalidArgumentException
      */
     public function setMessage($message)
     {
@@ -58,6 +42,50 @@ class Error extends AbstractCollectionItem
         }
         
         $this->message = $message;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getSolution()
+    {
+        return $this->solution;
+    }
+    
+    /**
+     * @param string $solution
+     * @return Error
+     */
+    public function setSolution($solution)
+    {
+        if (!is_string($solution)) {
+            throw new \InvalidArgumentException('Parameter solution must be a string');
+        }
+        
+        $this->solution = $solution;
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+    
+    /**
+     * @param int $level
+     * @return Error
+     */
+    public function setLevel($level)
+    {
+        if (!is_int($level)) {
+            throw new \InvalidArgumentException('Parameter level must be an integer');
+        }
+        
+        $this->level = $level;
         return $this;
     }
     
@@ -71,8 +99,9 @@ class Error extends AbstractCollectionItem
     public function jsonSerialize()
     {
         return [
-            'code' => $this->code,
-            'message' => $this->message
+            'message' => $this->message,
+            'solution' => $this->solution,
+            'level' => $this->level
         ];
     }
 }

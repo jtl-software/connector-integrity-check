@@ -30,34 +30,35 @@
                             </div>
                         </div>
 
-                        <div v-for="results in test_results">
-                            <table class="table table-striped" v-for="result in results">
-                                <tbody>
-                                    <tr v-for="data in result.data">
-                                        <td>
-                                            {{ data.message }}
-                                        </td>
-                                        <td>
-                                            <span class="label label-success pull-right">
-                                                <i class="glyphicon glyphicon-ok-sign"></i>
-                                                <span>Yolo</span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr v-for="error in result.errors">
-                                        <td>
-                                            {{ error.message }}
-                                        </td>
-                                        <td>
-                                            <span class="label label-danger pull-right">
-                                                <i class="glyphicon glyphicon-remove-sign"></i>
-                                                <span>Yolo</span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table table-striped" v-for="results in test_results">
+                            <tbody>
+                                <tr v-for="result in results">
+                                    <td width="50%">
+                                        <div class="test-name">
+                                            <strong>{{ result.name }}</strong><br>
+                                            <p class="hidden-xs expandable" v-html="result.description"></p>
+                                        </div>
+                                    </td>
+
+                                    <td width="25%">
+                                        <span v-if="result.data && result.data.expected">{{ result.data.expected }}</span>
+                                    </td>
+
+                                    <td width="25%">
+                                        <button type="button" class="btn btn-test-result btn-success btn-xs" v-if="!result.has_error">
+                                            <i class="glyphicon glyphicon-ok"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-test-result btn-danger btn-xs" v-else>
+                                            <i class="glyphicon glyphicon-ok"></i>
+                                        </button>
+
+                                        <span v-if="result.data && result.data.actual">{{ result.data.actual }}</span>
+                                        <p class="expandable" v-if="result.error && result.error.message">{{ result.error.message }}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 

@@ -2,9 +2,7 @@
 namespace Jtl\Connector\Integrity\Shops\Shopware\Tests;
 
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
-use Jtl\Connector\Integrity\Models\Test\Data;
 use Jtl\Connector\Integrity\Models\Test\Result;
-use Jtl\Connector\Integrity\Models\Test\TestType;
 
 class ProductPriceTest extends AbstractTest
 {
@@ -12,13 +10,13 @@ class ProductPriceTest extends AbstractTest
     {
         sleep(2);
         
-        $this->getResults()->add(
-            (new Result())->setType(
-                    (new TestType(TestType::DATABASE))
-                )
-                ->addData(
-                (new Data())->setMessage('yolo')
-            )
-        );
+        $this->checkMissingPrices();
+    }
+    
+    protected function checkMissingPrices()
+    {
+        $result = (new Result())->setName('Shopware missing product prices');
+    
+        $this->getResults()->add($result);
     }
 }
