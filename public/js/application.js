@@ -1887,6 +1887,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -2197,9 +2208,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         domProps: {
           "innerHTML": _vm._s(result.description)
         }
-      })]), _vm._v(" "), (result.has_error && result.error.message && result.error.message.length > 0) ? _c('div', {
+      })]), _vm._v(" "), (result.has_error &&
+        result.error.message &&
+        result.error.message.length > 0 &&
+        result.error.level == 1) ? _c('div', {
         staticClass: "bs-callout bs-callout-danger"
-      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error && result.error.solution && result.error.solution.length > 0) ? _c('div', {
+      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error &&
+        result.error.message &&
+        result.error.message.length > 0 &&
+        result.error.level == 2) ? _c('div', {
+        staticClass: "bs-callout bs-callout-warning"
+      }, [_c('h4', [_vm._v("Warnung")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error && result.error.solution && result.error.solution.length > 0) ? _c('div', {
         staticClass: "bs-callout bs-callout-info"
       }, [_c('h4', [_vm._v("Lösung")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.solution))])]) : _vm._e()]), _vm._v(" "), _c('td', {
         attrs: {

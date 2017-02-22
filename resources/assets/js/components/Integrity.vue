@@ -39,8 +39,19 @@
                                             <p class="hidden-xs expandable" v-html="result.description"></p>
                                         </div>
 
-                                        <div class="bs-callout bs-callout-danger" v-if="result.has_error && result.error.message && result.error.message.length > 0">
+                                        <div class="bs-callout bs-callout-danger" v-if="result.has_error &&
+                                                                                        result.error.message &&
+                                                                                        result.error.message.length > 0 &&
+                                                                                        result.error.level == 1">
                                             <h4>Fehler</h4>
+                                            <p>{{ result.error.message }}</p>
+                                        </div>
+
+                                        <div class="bs-callout bs-callout-warning" v-if="result.has_error &&
+                                                                                        result.error.message &&
+                                                                                        result.error.message.length > 0 &&
+                                                                                        result.error.level == 2">
+                                            <h4>Warnung</h4>
                                             <p>{{ result.error.message }}</p>
                                         </div>
 

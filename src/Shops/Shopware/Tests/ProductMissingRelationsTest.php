@@ -53,7 +53,7 @@ class ProductMissingRelationsTest extends AbstractShopwareTest
                                         WHERE a.id IS NULL');
     
         $stmt->execute();
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount()) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
                     'Es wurden %s Artikel (Details) gefunden, die keine Einträge in s_articles haben',
