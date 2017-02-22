@@ -2,6 +2,7 @@
 namespace Jtl\Connector\Integrity\Shops\Shopware\Tests;
 
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
+use Jtl\Connector\Integrity\Models\Test\Result;
 
 abstract class AbstractShopwareTest extends AbstractTest
 {

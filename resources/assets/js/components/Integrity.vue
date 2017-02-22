@@ -38,6 +38,16 @@
                                             <strong>{{ result.name }}</strong><br>
                                             <p class="hidden-xs expandable" v-html="result.description"></p>
                                         </div>
+
+                                        <div class="bs-callout bs-callout-danger" v-if="result.has_error && result.error.message && result.error.message.length > 0">
+                                            <h4>Fehler</h4>
+                                            <p>{{ result.error.message }}</p>
+                                        </div>
+
+                                        <div class="bs-callout bs-callout-info" v-if="result.has_error && result.error.solution && result.error.solution.length > 0">
+                                            <h4>Lösung</h4>
+                                            <p>{{ result.error.solution }}</p>
+                                        </div>
                                     </td>
 
                                     <td width="25%">
@@ -45,16 +55,22 @@
                                     </td>
 
                                     <td width="25%">
+                                        <!-- No Error -->
                                         <button type="button" class="btn btn-test-result btn-success btn-xs" v-if="!result.has_error">
                                             <i class="glyphicon glyphicon-ok"></i>
                                         </button>
 
+                                        <!-- Warning -->
+                                        <button type="button" class="btn btn-test-result btn-warning btn-xs" v-else-if="result.has_error && result.error.level == 2">
+                                            <i class="glyphicon glyphicon-warning-sign"></i>
+                                        </button>
+
+                                        <!-- Error -->
                                         <button type="button" class="btn btn-test-result btn-danger btn-xs" v-else>
                                             <i class="glyphicon glyphicon-remove"></i>
                                         </button>
 
                                         <span v-if="result.data && result.data.actual">{{ result.data.actual }}</span>
-                                        <p class="expandable" v-if="result.error && result.error.message">{{ result.error.message }}</p>
                                     </td>
                                 </tr>
                             </tbody>

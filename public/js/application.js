@@ -1871,6 +1871,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -2181,7 +2197,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         domProps: {
           "innerHTML": _vm._s(result.description)
         }
-      })])]), _vm._v(" "), _c('td', {
+      })]), _vm._v(" "), (result.has_error && result.error.message && result.error.message.length > 0) ? _c('div', {
+        staticClass: "bs-callout bs-callout-danger"
+      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error && result.error.solution && result.error.solution.length > 0) ? _c('div', {
+        staticClass: "bs-callout bs-callout-info"
+      }, [_c('h4', [_vm._v("Lösung")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.solution))])]) : _vm._e()]), _vm._v(" "), _c('td', {
         attrs: {
           "width": "25%"
         }
@@ -2196,6 +2216,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }, [_c('i', {
         staticClass: "glyphicon glyphicon-ok"
+      })]) : (result.has_error && result.error.level == 2) ? _c('button', {
+        staticClass: "btn btn-test-result btn-warning btn-xs",
+        attrs: {
+          "type": "button"
+        }
+      }, [_c('i', {
+        staticClass: "glyphicon glyphicon-warning-sign"
       })]) : _c('button', {
         staticClass: "btn btn-test-result btn-danger btn-xs",
         attrs: {
@@ -2203,9 +2230,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }, [_c('i', {
         staticClass: "glyphicon glyphicon-remove"
-      })]), _vm._v(" "), (result.data && result.data.actual) ? _c('span', [_vm._v(_vm._s(result.data.actual))]) : _vm._e(), _vm._v(" "), (result.error && result.error.message) ? _c('p', {
-        staticClass: "expandable"
-      }, [_vm._v(_vm._s(result.error.message))]) : _vm._e()])])
+      })]), _vm._v(" "), (result.data && result.data.actual) ? _c('span', [_vm._v(_vm._s(result.data.actual))]) : _vm._e()])])
     }))])
   })], 2)])])])])
 },staticRenderFns: []}
