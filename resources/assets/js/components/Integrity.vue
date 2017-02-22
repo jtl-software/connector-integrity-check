@@ -50,7 +50,7 @@
                                         </button>
 
                                         <button type="button" class="btn btn-test-result btn-danger btn-xs" v-else>
-                                            <i class="glyphicon glyphicon-ok"></i>
+                                            <i class="glyphicon glyphicon-remove"></i>
                                         </button>
 
                                         <span v-if="result.data && result.data.actual">{{ result.data.actual }}</span>

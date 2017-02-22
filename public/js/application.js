@@ -2202,7 +2202,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "type": "button"
         }
       }, [_c('i', {
-        staticClass: "glyphicon glyphicon-ok"
+        staticClass: "glyphicon glyphicon-remove"
       })]), _vm._v(" "), (result.data && result.data.actual) ? _c('span', [_vm._v(_vm._s(result.data.actual))]) : _vm._e(), _vm._v(" "), (result.error && result.error.message) ? _c('p', {
         staticClass: "expandable"
       }, [_vm._v(_vm._s(result.error.message))]) : _vm._e()])])
