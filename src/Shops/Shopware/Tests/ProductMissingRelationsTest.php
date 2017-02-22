@@ -30,10 +30,11 @@ class ProductMissingRelationsTest extends AbstractShopwareTest
         if ($stmt->rowCount() > 0) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden %s Artikel gefunden, die keine Einträge in s_articles_details haben',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel gefunden, die keine Einträge in <code>%s</code> haben',
+                    $stmt->rowCount(),
+                    's_articles_details'
                 ))
-                    ->setSolution('Die Artikel können nicht gezogen werden, da Daten fehlen. Es wird auch eine falsche Artikelanzahl angezeigt. Bitte bereinigen Sie Ihre Datenbank.')
+                    ->setSolution('Einige Artikel können nicht gezogen werden, da Daten fehlen. Bitte bereinigen Sie Ihre Datenbank.')
             );
         }
         
@@ -56,10 +57,11 @@ class ProductMissingRelationsTest extends AbstractShopwareTest
         if ($stmt->rowCount()) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden %s Artikel (Details) gefunden, die keine Einträge in s_articles haben',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel (Details) gefunden, die keine Einträge in <code>%s</code> haben',
+                    $stmt->rowCount(),
+                    's_articles'
                 ))
-                    ->setSolution('Die Artikel können nicht gezogen werden, da Daten fehlen. Es wird auch eine falsche Artikelanzahl angezeigt. Bitte bereinigen Sie Ihre Datenbank.')
+                    ->setSolution('Einige Artikel können nicht gezogen werden, da Daten fehlen. Bitte bereinigen Sie Ihre Datenbank.')
             );
         }
         
@@ -82,13 +84,22 @@ class ProductMissingRelationsTest extends AbstractShopwareTest
                                         WHERE f.name IS NULL AND a.filtergroupID IS NOT NULL');
     
         $stmt->execute();
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount()) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden %s Artikel gefunden, die keine Einträge in s_filter haben',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel gefunden, die keine Einträge in <code>%s</code> haben',
+                    $stmt->rowCount(),
+                    's_filter'
                 ))
-                    ->setSolution('')
+                    ->setSolution(sprintf(
+                        'Bitte kontrollieren Sie ob die IDs in der Tabelle <code>%s</code>, Spalte <code>%s</code>, auch in der Tabelle <code>%s</code>, Spalte <code>%s</code> existieren.
+                         Falls nicht, setzen Sie die Spalte <code>%s</code> entweder auf den korrekten Wert oder auf NULL (kein String)',
+                        's_articles',
+                        'filtergroupID',
+                        's_filter',
+                        'id',
+                        'filtergroupID'
+                    ))
             );
         }
     
@@ -102,22 +113,27 @@ class ProductMissingRelationsTest extends AbstractShopwareTest
     {
         $result = (new Result())->setName('Produkte ohne Einträge in der s_filter Tabelle');
         
-        $stmt = $this->Db()->prepare('SELECT d.ordernumber, a.id
+        $stmt = $this->Db()->prepare('SELECT a.id
                                         FROM s_articles a
-                                        JOIN s_articles_details d ON d.articleID = a.id
-                                          AND ((a.configurator_set_id > 0 AND d.kind = 0)
-                                          OR (a.configurator_set_id IS NULL AND d.id = a.main_detail_id))
-                                        LEFT JOIN s_filter f ON f.id = a.filtergroupID
-                                        WHERE f.name IS NULL AND a.filtergroupID IS NOT NULL');
+                                        LEFT JOIN s_articles_categories ac ON ac.articleID = a.id
+                                        LEFT JOIN s_categories c ON c.id = ac.categoryID
+                                        WHERE c.id IS NULL');
         
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden %s Artikel gefunden, die keine Einträge in s_filter haben',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel gefunden, die keine Einträge in <code>%s</code> oder <code>%s</code> haben',
+                    $stmt->rowCount(),
+                    's_articles_categories',
+                    's_categories'
                 ))
-                    ->setSolution('')
+                    ->setSolution(sprintf(
+                        'Bitte kontrollieren Sie ob die IDs in der Artikel-Kategorie Tabelle <code>%s</code>, auch in der Tabelle <code>%s</code> existieren.
+                         Falls nicht, bereinigen Sie bitte Ihre Datenbank',
+                        's_articles_categories',
+                        's_articles und s_categories'
+                    ))
             );
         }
         

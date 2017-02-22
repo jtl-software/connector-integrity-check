@@ -2,7 +2,6 @@
 namespace Jtl\Connector\Integrity\Shops\Shopware\Tests;
 
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
-use Jtl\Connector\Integrity\Models\Test\Result;
 
 abstract class AbstractShopwareTest extends AbstractTest
 {
@@ -24,7 +23,7 @@ abstract class AbstractShopwareTest extends AbstractTest
             
             if (!file_exists($config_path)) {
                 throw new \Exception(sprintf(
-                    'Shopware config "%s" not found',
+                    'Shopware config <code>%s</code> not found',
                     $config_path
                 ));
             }
