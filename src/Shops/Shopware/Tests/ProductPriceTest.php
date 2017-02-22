@@ -30,8 +30,9 @@ class ProductPriceTest extends AbstractShopwareTest
         if ($stmt->rowCount() > 0) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden <code>%s</code> Artikel gefunden, die keine Einträge in s_articles_prices haben',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel gefunden, die keine Einträge in <code>%s</code> haben',
+                    $stmt->rowCount(),
+                    's_articles_prices'
                 ))
                     ->setSolution('Bitte überprüfen Sie alle Artikel, ob diese über min. einen Preis verfügen. Falls nicht, bereinigen Sie Ihre Datenbank.')
             );
@@ -62,8 +63,9 @@ class ProductPriceTest extends AbstractShopwareTest
         if ($stmt->rowCount() > 0) {
             $result->setError(
                 (new Error())->setMessage(sprintf(
-                    'Es wurden <code>%s</code> Artikel gefunden, bei denen nicht für alle Kundengruppen Einträge in s_articles_prices vorhanden sind',
-                    $stmt->rowCount()
+                    'Es wurden <code>%s</code> Artikel gefunden, bei denen nicht für alle Kundengruppen Einträge in <code>%s</code> vorhanden sind',
+                    $stmt->rowCount(),
+                    's_articles_prices'
                 ))
                     ->setSolution('')
                     ->setLevel(Error::LEVEL_WARNING)
