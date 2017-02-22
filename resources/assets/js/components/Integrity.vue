@@ -18,7 +18,7 @@
                 <div class="panel panel-default" v-show="shop">
                     <div class="panel-heading">
                         {{ shop }}
-                        <button v-show="progress == 100" class="btn btn-xs btn-primary pull-right" @click="refresh">
+                        <button v-show="test_count > 0 && test_count == test_results.length" class="btn btn-xs btn-primary pull-right" @click="refresh">
                             <i class="glyphicon glyphicon-refresh"></i>
                         </button>
                     </div>
@@ -44,7 +44,7 @@
                                                                                         result.error.message.length > 0 &&
                                                                                         result.error.level == 1">
                                             <h4>Fehler</h4>
-                                            <p>{{ result.error.message }}</p>
+                                            <p v-html="result.error.message"></p>
                                         </div>
 
                                         <div class="bs-callout bs-callout-warning" v-if="result.has_error &&
@@ -52,12 +52,12 @@
                                                                                         result.error.message.length > 0 &&
                                                                                         result.error.level == 2">
                                             <h4>Warnung</h4>
-                                            <p>{{ result.error.message }}</p>
+                                            <p v-html="result.error.message"></p>
                                         </div>
 
                                         <div class="bs-callout bs-callout-info" v-if="result.has_error && result.error.solution && result.error.solution.length > 0">
                                             <h4>Lösung</h4>
-                                            <p>{{ result.error.solution }}</p>
+                                            <p v-html="result.error.solution"></p>
                                         </div>
                                     </td>
 

@@ -2037,7 +2037,7 @@ var Component = __webpack_require__(31)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/connector-integrity/resources/assets/js/components/Integrity.vue"
+Component.options.__file = "/var/www/html/woocommerce/integrity-check/resources/assets/js/components/Integrity.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Integrity.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -2048,9 +2048,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d83142b0", Component.options)
+    hotAPI.createRecord("data-v-a8b96666", Component.options)
   } else {
-    hotAPI.reload("data-v-d83142b0", Component.options)
+    hotAPI.reload("data-v-a8b96666", Component.options)
   }
 })()}
 
@@ -2171,8 +2171,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.progress == 100),
-      expression: "progress == 100"
+      value: (_vm.test_count > 0 && _vm.test_count == _vm.test_results.length),
+      expression: "test_count > 0 && test_count == test_results.length"
     }],
     staticClass: "btn btn-xs btn-primary pull-right",
     on: {
@@ -2213,14 +2213,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         result.error.message.length > 0 &&
         result.error.level == 1) ? _c('div', {
         staticClass: "bs-callout bs-callout-danger"
-      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error &&
+      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', {
+        domProps: {
+          "innerHTML": _vm._s(result.error.message)
+        }
+      })]) : _vm._e(), _vm._v(" "), (result.has_error &&
         result.error.message &&
         result.error.message.length > 0 &&
         result.error.level == 2) ? _c('div', {
         staticClass: "bs-callout bs-callout-warning"
-      }, [_c('h4', [_vm._v("Warnung")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.message))])]) : _vm._e(), _vm._v(" "), (result.has_error && result.error.solution && result.error.solution.length > 0) ? _c('div', {
+      }, [_c('h4', [_vm._v("Warnung")]), _vm._v(" "), _c('p', {
+        domProps: {
+          "innerHTML": _vm._s(result.error.message)
+        }
+      })]) : _vm._e(), _vm._v(" "), (result.has_error && result.error.solution && result.error.solution.length > 0) ? _c('div', {
         staticClass: "bs-callout bs-callout-info"
-      }, [_c('h4', [_vm._v("Lösung")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(result.error.solution))])]) : _vm._e()]), _vm._v(" "), _c('td', {
+      }, [_c('h4', [_vm._v("Lösung")]), _vm._v(" "), _c('p', {
+        domProps: {
+          "innerHTML": _vm._s(result.error.solution)
+        }
+      })]) : _vm._e()]), _vm._v(" "), _c('td', {
         attrs: {
           "width": "25%"
         }
@@ -2257,7 +2269,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-d83142b0", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-a8b96666", module.exports)
   }
 }
 
