@@ -2,7 +2,7 @@
 namespace Jtl\Connector\Integrity\Shops\Gambio;
 
 use Jtl\Connector\Integrity\Models\Test\AbstractTestLoader;
-use Jtl\Connector\Integrity\Shops\Gambio\Tests\ProductPriceTest;
+use Jtl\Connector\Integrity\Shops\Gambio\Tests\InstallationTest;
 
 class GambioTestLoader extends AbstractTestLoader
 {
@@ -13,6 +13,6 @@ class GambioTestLoader extends AbstractTestLoader
     {
         parent::__construct();
 
-        $this->addTest(new ProductPriceTest(1));
+        $this->addTest(new InstallationTest(1));
     }
 }
