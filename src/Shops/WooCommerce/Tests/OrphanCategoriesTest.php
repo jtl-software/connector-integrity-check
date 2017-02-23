@@ -19,8 +19,8 @@ class OrphanCategoriesTest extends AbstractWooCommerceTest
                 SELECT term_id 
                 FROM `$wpdb->terms`
             )
-            ORDER BY t.term_id"
-        );
+            ORDER BY t.term_id
+        ");
 
         $result = $this->createResult(
             'Kategorien mit gelöschter Oberkategorie',
@@ -31,7 +31,7 @@ class OrphanCategoriesTest extends AbstractWooCommerceTest
             $this->addErrorToResult($result,
                 'Die Oberkategorien von folgenden Kategorien existieren nicht: ' . implode(', ', $orphans),
                 'Ordnen Sie den Kategorien eine neue Oberkategorie zu oder machen Sie die Kategorien zu Root Kategorien.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 

@@ -22,8 +22,8 @@ class VarCombiChildrenWithSimpleFatherTest extends AbstractWooCommerceTest
                 LEFT JOIN `$wpdb->terms` t ON t.term_id = tt.term_id
                 WHERE p.post_type = 'product' AND tt.taxonomy = 'product_type' AND t.name = 'simple'
             )
-            ORDER BY ID"
-        );
+            ORDER BY ID
+        ");
 
         $result = $this->createResult(
             'Kindartikel mit "einfachem" Vaterartikel',
@@ -45,7 +45,7 @@ class VarCombiChildrenWithSimpleFatherTest extends AbstractWooCommerceTest
             $this->addErrorToResult($result,
                 implode('<br>', $messages),
                 'Löschen Sie die Kindartikel.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 

@@ -16,8 +16,8 @@ class DuplicatedSkuTest extends AbstractWooCommerceTest
             WHERE meta_key = '_sku' AND meta_value IS NOT NULL AND meta_value != '' 
             GROUP BY meta_value
             HAVING COUNT(meta_value) > 1
-            ORDER BY meta_value"
-        );
+            ORDER BY meta_value
+        ");
 
         $result = $this->createResult(
             'Doppelte SKUs',
@@ -35,7 +35,7 @@ class DuplicatedSkuTest extends AbstractWooCommerceTest
                 $result,
                 implode('<br>', $messages),
                 'Vergeben Sie eindeutige SKUs für alle Artikel.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 

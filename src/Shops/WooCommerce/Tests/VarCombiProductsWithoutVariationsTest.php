@@ -24,8 +24,8 @@ class VarCombiProductsWithoutVariationsTest extends AbstractWooCommerceTest
             LEFT JOIN `$wpdb->term_taxonomy` tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
             LEFT JOIN `$wpdb->terms` t ON t.term_id = tt.term_id
             WHERE p.post_type = 'product' AND tt.taxonomy = 'product_type' AND t.name = 'variable' AND pm.meta_key = '_product_attributes'
-            ORDER BY p.ID"
-        );
+            ORDER BY p.ID
+        ");
 
         $result = $this->createResult(
             'Vaterartikel ohne Variationen',
@@ -46,7 +46,7 @@ class VarCombiProductsWithoutVariationsTest extends AbstractWooCommerceTest
                     $result,
                     'Folgende Vaterartikel haben keine Variationen: ' . $ids,
                     'Überprüfen Sie, ob es sich nicht mehr um einen Varkombiartikel handelt.',
-                    Error::LEVEL_CRITICAL
+                    Error::LEVEL_ERROR
                 );
             }
         }
@@ -67,8 +67,8 @@ class VarCombiProductsWithoutVariationsTest extends AbstractWooCommerceTest
                 FROM `$wpdb->postmeta`
                 WHERE meta_key LIKE 'attribute_%%'
             )
-            ORDER BY ID"
-        );
+            ORDER BY ID
+        ");
 
         $result = $this->createResult(
             'Kindartikel ohne Variationswerte',
@@ -80,7 +80,7 @@ class VarCombiProductsWithoutVariationsTest extends AbstractWooCommerceTest
                 $result,
                 'Folgende Kindartikel haben keine Variationswerte: ' . implode(', ', $children),
                 'Überprüfen Sie den Kind- sowie den Vaterartikel.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 

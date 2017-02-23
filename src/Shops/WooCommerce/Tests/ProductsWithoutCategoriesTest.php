@@ -20,8 +20,8 @@ class ProductsWithoutCategoriesTest extends AbstractWooCommerceTest
                 LEFT JOIN `$wpdb->term_taxonomy` tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
                 WHERE tt.taxonomy = 'product_cat'
             )
-            ORDER BY ID"
-        );
+            ORDER BY ID
+        ");
 
         $result = $this->createResult(
             'Produkte ohne Kategorien',

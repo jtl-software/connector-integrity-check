@@ -28,8 +28,8 @@ class OrphanVarCombisTest extends AbstractWooCommerceTest
                 FROM `$wpdb->posts`
                 WHERE post_type = 'product_variation'
             )
-            ORDER BY p.ID"
-        );
+            ORDER BY p.ID
+        ");
 
         $result = $this->createResult(
             'Vaterartikel ohne Kindartikel',
@@ -41,7 +41,7 @@ class OrphanVarCombisTest extends AbstractWooCommerceTest
                 $result,
                 'Folgende Vaterartikel haben keine Kindartikel: ' . implode(', ', $parents),
                 'Löschen Sie den Artikel oder erstellen neue Kindartikel.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 
@@ -61,8 +61,8 @@ class OrphanVarCombisTest extends AbstractWooCommerceTest
                 FROM `$wpdb->posts`
                 WHERE post_type = 'product'
             )
-            ORDER BY ID"
-        );
+            ORDER BY ID
+        ");
 
         $result = $this->createResult(
             'Kindartikel ohne Vaterartikel',
@@ -74,7 +74,7 @@ class OrphanVarCombisTest extends AbstractWooCommerceTest
                 $result,
                 'Folgende Kindartikel haben keinen Vater: ' . implode(', ', $children),
                 'Löschen Sie die Kindartikel.',
-                Error::LEVEL_CRITICAL
+                Error::LEVEL_ERROR
             );
         }
 
