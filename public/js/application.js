@@ -1898,6 +1898,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -1977,8 +1985,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     t: number
                 }
             }).then(function (response) {
-                _this3.test_results.push(response.data.results);
                 _this3.progress += _this3.progress_step;
+                if (typeof response.data.results !== 'undefined') {
+                    _this3.test_results.push(response.data.results);
+
+                    // Critical Error
+                    console.log(response.data.results);
+                    for (var i = 0; i < response.data.results.length; i++) {
+                        if (response.data.results[i].has_error && response.data.results[i].error.level == 1) {
+                            return;
+                        }
+                    }
+                }
 
                 var number = _this3.test_sorts.shift();
                 if (typeof number !== 'undefined') {
@@ -2213,7 +2231,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         result.error.message.length > 0 &&
         result.error.level == 1) ? _c('div', {
         staticClass: "bs-callout bs-callout-danger"
-      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', {
+      }, [_c('h4', [_vm._v("Kritischer Fehler")]), _vm._v(" "), _c('p', {
         domProps: {
           "innerHTML": _vm._s(result.error.message)
         }
@@ -2221,6 +2239,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         result.error.message &&
         result.error.message.length > 0 &&
         result.error.level == 2) ? _c('div', {
+        staticClass: "bs-callout bs-callout-danger"
+      }, [_c('h4', [_vm._v("Fehler")]), _vm._v(" "), _c('p', {
+        domProps: {
+          "innerHTML": _vm._s(result.error.message)
+        }
+      })]) : _vm._e(), _vm._v(" "), (result.has_error &&
+        result.error.message &&
+        result.error.message.length > 0 &&
+        result.error.level == 3) ? _c('div', {
         staticClass: "bs-callout bs-callout-warning"
       }, [_c('h4', [_vm._v("Warnung")]), _vm._v(" "), _c('p', {
         domProps: {
@@ -2247,7 +2274,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }, [_c('i', {
         staticClass: "glyphicon glyphicon-ok"
-      })]) : (result.has_error && result.error.level == 2) ? _c('button', {
+      })]) : (result.has_error && result.error.level == 3) ? _c('button', {
         staticClass: "btn btn-test-result btn-warning btn-xs",
         attrs: {
           "type": "button"

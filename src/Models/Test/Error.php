@@ -6,7 +6,8 @@ use Jtl\Connector\Integrity\Models\Collection\AbstractCollectionItem;
 class Error extends AbstractCollectionItem
 {
     const LEVEL_CRITICAL = 1;
-    const LEVEL_WARNING = 2;
+    const LEVEL_ERROR = 2;
+    const LEVEL_WARNING = 3;
     
     /**
      * @var string
@@ -21,7 +22,7 @@ class Error extends AbstractCollectionItem
     /**
      * @var int
      */
-    protected $level = self::LEVEL_CRITICAL;
+    protected $level = self::LEVEL_ERROR;
     
     /**
      * @return string

@@ -1,6 +1,7 @@
 <?php
 namespace Jtl\Connector\Integrity\Shops\Shopware\Tests;
 
+use Jtl\Connector\Integrity\Exceptions\FileNotExistsException;
 use Jtl\Connector\Integrity\Models\Test\AbstractTest;
 
 abstract class AbstractShopwareTest extends AbstractTest
@@ -17,15 +18,13 @@ abstract class AbstractShopwareTest extends AbstractTest
     protected function Db()
     {
         if (is_null(self::$db)) {
-            //$config_path = ROOT_DIR . '/../config.php';
-            // @TODO: Insert valid path
-            $config_path = '/var/www/sw52/config.php';
+            $config_path = ROOT_DIR . '/../config.php';
             
             if (!file_exists($config_path)) {
-                throw new \Exception(sprintf(
-                    'Shopware config <code>%s</code> not found',
+                throw (new FileNotExistsException(sprintf(
+                    'Shopware Konfigurationsdatei <code>%s</code> wurde nicht gefunden',
                     $config_path
-                ));
+                )))->setMissingFile($config_path);
             }
             
             $c = require_once($config_path);

@@ -43,6 +43,14 @@
                                                                                         result.error.message &&
                                                                                         result.error.message.length > 0 &&
                                                                                         result.error.level == 1">
+                                            <h4>Kritischer Fehler</h4>
+                                            <p v-html="result.error.message"></p>
+                                        </div>
+
+                                        <div class="bs-callout bs-callout-danger" v-if="result.has_error &&
+                                                                                        result.error.message &&
+                                                                                        result.error.message.length > 0 &&
+                                                                                        result.error.level == 2">
                                             <h4>Fehler</h4>
                                             <p v-html="result.error.message"></p>
                                         </div>
@@ -50,7 +58,7 @@
                                         <div class="bs-callout bs-callout-warning" v-if="result.has_error &&
                                                                                         result.error.message &&
                                                                                         result.error.message.length > 0 &&
-                                                                                        result.error.level == 2">
+                                                                                        result.error.level == 3">
                                             <h4>Warnung</h4>
                                             <p v-html="result.error.message"></p>
                                         </div>
@@ -72,7 +80,7 @@
                                         </button>
 
                                         <!-- Warning -->
-                                        <button type="button" class="btn btn-test-result btn-warning btn-xs" v-else-if="result.has_error && result.error.level == 2">
+                                        <button type="button" class="btn btn-test-result btn-warning btn-xs" v-else-if="result.has_error && result.error.level == 3">
                                             <i class="glyphicon glyphicon-warning-sign"></i>
                                         </button>
 
@@ -169,8 +177,18 @@
                     }
                 })
                     .then(response => {
-                        this.test_results.push(response.data.results);
                         this.progress += this.progress_step;
+                        if (typeof(response.data.results) !== 'undefined') {
+                            this.test_results.push(response.data.results);
+
+                            // Critical Error
+                            console.log(response.data.results);
+                            for (var i = 0; i < response.data.results.length; i++) {
+                                if (response.data.results[i].has_error && response.data.results[i].error.level == 1) {
+                                    return;
+                                }
+                            }
+                        }
 
                         var number = this.test_sorts.shift();
                         if (typeof(number) !== 'undefined') {
