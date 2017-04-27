@@ -182,7 +182,7 @@
                             this.test_results.push(response.data.results);
 
                             // Critical Error
-                            console.log(response.data.results);
+                            //console.log(response.data.results);
                             for (var i = 0; i < response.data.results.length; i++) {
                                 if (response.data.results[i].has_error && response.data.results[i].error.level == 1) {
                                     return;

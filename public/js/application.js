@@ -1803,7 +1803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.test_results.push(response.data.results);
 
                     // Critical Error
-                    console.log(response.data.results);
+                    //console.log(response.data.results);
                     for (var i = 0; i < response.data.results.length; i++) {
                         if (response.data.results[i].has_error && response.data.results[i].error.level == 1) {
                             return;
@@ -2058,7 +2058,7 @@ var Component = __webpack_require__(31)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/sw52/integrity-check/resources/assets/js/components/Integrity.vue"
+Component.options.__file = "/var/www/gambio/integrity-check/resources/assets/js/components/Integrity.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Integrity.vue: functional components are not supported with templates, they should use render functions.")}
 
