@@ -10,6 +10,7 @@ use Jtl\Connector\Integrity\Models\Test\TestCollection;
 use Jtl\Connector\Integrity\Shops\Server\ServerTestLoader;
 use Jtl\Connector\Integrity\Shops\Shopware\ShopwareTestLoader;
 use Jtl\Connector\Integrity\Shops\Gambio\GambioTestLoader;
+use Jtl\Connector\Integrity\Shops\Modified\ModifiedTestLoader;
 use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
 
 final class IntegrityCheck
@@ -139,6 +140,7 @@ final class IntegrityCheck
             case Shop::PRESTA:
                 break;
             case Shop::MODIFIED:
+                $this->tests = (new ModifiedTestLoader())->getTests();
                 break;
             case Shop::OXID:
                 break;
