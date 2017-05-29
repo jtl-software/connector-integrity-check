@@ -15,6 +15,7 @@ class DbConnectionTest extends AbstractWooCommerceTest
 
         try {
             global $wpdb;
+
             if (is_null($wpdb)) {
                 $this->addErrorToResult(
                     $result,
