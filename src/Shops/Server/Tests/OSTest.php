@@ -14,7 +14,8 @@ class OSTest extends AbstractTest
         'IRIX64' => 'IRIX',
         'SunOS' => 'Solaris/OpenSolaris',
         'WIN32' => 'Windows',
-        'WINNT' => 'Windows'
+        'WINNT' => 'Windows',
+        'Windows NT' => 'Windows'
     );
     
     private $arch_map = array(
