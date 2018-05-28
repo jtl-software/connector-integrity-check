@@ -1,5 +1,5 @@
 {
-    "name": "jtlconnector/integrity-check",
+    "name": "jtl/integrity-check",
     "type": "package",
     "description": "Integrity-Check for JTL-Connectors.",
     "keywords": [

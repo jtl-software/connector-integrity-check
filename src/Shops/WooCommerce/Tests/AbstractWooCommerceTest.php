@@ -9,31 +9,42 @@ use Jtl\Connector\Integrity\Models\Test\Result;
 
 abstract class AbstractWooCommerceTest extends AbstractTest
 {
+    /**
+     * @param int $sort
+     * @throws FileNotExistsException
+     */
     public function __construct($sort = 0)
     {
         parent::__construct($sort);
-
-        $config_path = ROOT_DIR . '/../wp-config.php';
-
+        
+        if(file_exists(ROOT_DIR . '/../wp-config.php'))
+        {
+            //standalone
+            $config_path = ROOT_DIR . '/../wp-config.php';
+        }else {
+            //package
+            $config_path = __DIR__ . '/../../../../../../../../../../wp-config.php';
+        }
+        
         if (!file_exists($config_path)) {
             throw (new FileNotExistsException(sprintf(
                 'WordPress Konfigurationsdatei <code>%s</code> wurde nicht gefunden',
                 $config_path
             )))->setMissingFile($config_path);
         }
-
+        
         require_once($config_path);
     }
-
+    
     protected function createResult($name, $description)
     {
         $result = new Result($this->sort);
         $result->setName($name);
         $result->setDescription($description);
-
+        
         return $result;
     }
-
+    
     protected function addErrorToResult(Result &$result, $message, $solution = '', $level = Error::LEVEL_CRITICAL)
     {
         $error = new Error();
