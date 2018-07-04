@@ -17,13 +17,18 @@ abstract class AbstractWooCommerceTest extends AbstractTest
     {
         parent::__construct($sort);
         
-        if(file_exists(ROOT_DIR . '/../wp-config.php'))
-        {
-            //standalone
-            $config_path = ROOT_DIR . '/../wp-config.php';
-        }else {
+        //standalone
+        $config_path = ROOT_DIR . '/../wp-config.php';
+        
+        if (!file_exists($config_path)) {
             //package
-            $config_path = __DIR__ . '/../../../../../../../../../../wp-config.php';
+            if(isset(ABSPATH)){
+                $config_path = ABSPATH . 'wp-config.php';
+            }
+           
+            if (!file_exists($config_path)) {
+                $config_path = __DIR__ . '/../../../../../../../../../../wp-config.php';
+            }
         }
         
         if (!file_exists($config_path)) {
