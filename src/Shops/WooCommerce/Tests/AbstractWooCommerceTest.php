@@ -22,7 +22,7 @@ abstract class AbstractWooCommerceTest extends AbstractTest
         
         if (!file_exists($config_path)) {
             //package
-            if(isset(ABSPATH)){
+            if(null !== ABSPATH){
                 $config_path = ABSPATH . 'wp-config.php';
             }
            
