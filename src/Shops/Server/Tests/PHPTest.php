@@ -136,7 +136,7 @@ class PHPTest extends AbstractTest
                     ->setActual(ini_get('max_execution_time'))
             );
         
-        if (ini_get('max_execution_time') < 120) {
+        if (ini_get('max_execution_time') < 120 && ini_get('max_execution_time') != 0 ) {
             $result->setError(
                 (new Error())->setMessage('PHP max_execution_time zu niedrig')
                     ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
