@@ -1,4 +1,13 @@
 {
+    "name": "jtl/integrity-check",
+    "type": "package",
+    "description": "Integrity-Check for JTL-Connectors.",
+    "keywords": [
+        "jtl",
+        "connector"
+    ],
+    "homepage": "http://www.jtl-software.de",
+    "license": "GPL",
     "autoload": {
         "psr-4": {
             "Jtl\\Connector\\Integrity\\": "src/"
