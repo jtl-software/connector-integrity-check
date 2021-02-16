@@ -40,9 +40,9 @@ require_once dirname(__DIR__) . '/bootstrap.php';
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="http://www.jtl-software.de/">JTL-Software GmbH</a></li>
-                    <li><a href="http://wiki.jtl-software.de/index.php?title=Kategorie:JTL-Connector">Wiki</a></li>
-                    <li><a href="http://forum.jtl-software.de/">JTL-Supportforum</a></li>
+                    <li><a href="https://www.jtl-software.de/">JTL-Software GmbH</a></li>
+                    <li><a href="https://guide.jtl-software.de/jtl-connector/">JTL-Guide</a></li>
+                    <li><a href="https://forum.jtl-software.de/">JTL-Forum</a></li>
                 </ul>
             </div>
         </div>
