@@ -8,7 +8,7 @@ class ErrorCollection extends AbstractCollection
     /**
      * @var string
      */
-    protected $item_type = Error::class;
+    protected $itemType = Error::class;
     
     /**
      * @return bool

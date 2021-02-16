@@ -8,7 +8,7 @@ class DataCollection extends AbstractCollection
     /**
      * @var string
      */
-    protected $item_type = Data::class;
+    protected $itemType = Data::class;
     
     /**
      * @return bool

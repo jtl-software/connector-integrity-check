@@ -18,7 +18,7 @@ class Result extends AbstractCollectionItem
     /**
      * @var bool
      */
-    protected $has_error = false;
+    protected $hasError = false;
     
     /**
      * @var Error
@@ -76,7 +76,7 @@ class Result extends AbstractCollectionItem
      */
     public function hasError()
     {
-        return $this->has_error;
+        return $this->hasError;
     }
     
     /**
@@ -102,7 +102,7 @@ class Result extends AbstractCollectionItem
         }
         
         $this->error = $error;
-        $this->has_error = !is_null($error);
+        $this->hasError = !is_null($error);
         return $this;
     }
     
@@ -146,7 +146,7 @@ class Result extends AbstractCollectionItem
             'description' => $this->description,
             'data' => $this->data,
             'error' => $this->error,
-            'has_error' => $this->has_error
+            'has_error' => $this->hasError
         ];
     }
 }

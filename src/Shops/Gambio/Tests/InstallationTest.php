@@ -8,7 +8,7 @@ use Jtl\Connector\Integrity\Models\Test\Error;
 
 class InstallationTest extends AbstractGambioTest
 {
-    private static $min_version = '3.9';
+    private static $minVersion = '3.9';
 
     public function run()
     {
@@ -51,28 +51,28 @@ class InstallationTest extends AbstractGambioTest
         $result = (new Result())->setName('Gambio Version');
 
         try {
-            $release_path = ROOT_DIR . '/../release_info.php';
+            $releasePath = ROOT_DIR . '/../release_info.php';
 
-            if (!file_exists($release_path)) {
+            if (!file_exists($releasePath)) {
                 throw (new FileNotExistsException(sprintf(
                     'Gambio Release-Info Datei <code>%s</code> wurde nicht gefunden',
-                    $release_path
-                )))->setMissingFile($release_path);
+                    $releasePath
+                )))->setMissingFile($releasePath);
             }
 
-            $r = require_once($release_path);
+            $r = require_once($releasePath);
             $v = ltrim($gx_version,'v');
 
             $result->setData(
-                (new Data())->setExpected('>= ' . static::$min_version)
+                (new Data())->setExpected('>= ' . static::$minVersion)
                     ->setActual($v)
             );
 
-            if (version_compare($v, static::$min_version, '<')) {
+            if (version_compare($v, static::$minVersion, '<')) {
                 $result->setError(
                     (new Error())->setMessage('Der Connector ist nicht mit Ihrer Gambio-Version kompatibel.')
                         ->setLevel(Error::LEVEL_CRITICAL)
-                        ->setSolution('Bitte updaten Sie Ihre Gambio-Installation auf mindestens GX ' . static::$min_version . ' oder neuer.')
+                        ->setSolution('Bitte updaten Sie Ihre Gambio-Installation auf mindestens GX ' . static::$minVersion . ' oder neuer.')
                 );
             }
         } catch (FileNotExistsException $e) {

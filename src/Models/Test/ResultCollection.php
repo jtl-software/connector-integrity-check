@@ -8,7 +8,7 @@ class ResultCollection extends AbstractCollection
     /**
      * @var string
      */
-    protected $item_type = Result::class;
+    protected $itemType = Result::class;
     
     /**
      * @return bool

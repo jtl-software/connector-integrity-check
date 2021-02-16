@@ -14,7 +14,7 @@ abstract class AbstractCollection implements CollectionInterface, \Countable,
     /**
      * @var string
      */
-    protected $item_type = '';
+    protected $itemType = '';
     
     /**
      * @param AbstractCollectionItem $item
@@ -160,10 +160,10 @@ abstract class AbstractCollection implements CollectionInterface, \Countable,
      */
     protected function checkType(AbstractCollectionItem $item)
     {
-        if (!empty($this->item_type) && !($item instanceof $this->item_type)) {
+        if (!empty($this->itemType) && !($item instanceof $this->itemType)) {
             throw new \InvalidArgumentException(sprintf(
                 'Parameter item must be from type %s - %s given',
-                $this->item_type,
+                $this->itemType,
                 get_class($item)
             ));
         }

@@ -18,27 +18,27 @@ abstract class AbstractWooCommerceTest extends AbstractTest
         parent::__construct($sort);
         
         //standalone
-        $config_path = ROOT_DIR . '/../wp-config.php';
+        $configPath = ROOT_DIR . '/../wp-config.php';
         
-        if (!file_exists($config_path)) {
+        if (!file_exists($configPath)) {
             //package
             if(null !== ABSPATH){
-                $config_path = ABSPATH . 'wp-config.php';
+                $configPath = ABSPATH . 'wp-config.php';
             }
            
-            if (!file_exists($config_path)) {
-                $config_path = __DIR__ . '/../../../../../../../../../../wp-config.php';
+            if (!file_exists($configPath)) {
+                $configPath = __DIR__ . '/../../../../../../../../../../wp-config.php';
             }
         }
         
-        if (!file_exists($config_path)) {
+        if (!file_exists($configPath)) {
             throw (new FileNotExistsException(sprintf(
                 'WordPress Konfigurationsdatei <code>%s</code> wurde nicht gefunden',
-                $config_path
-            )))->setMissingFile($config_path);
+                $configPath
+            )))->setMissingFile($configPath);
         }
         
-        require_once($config_path);
+        require_once($configPath);
     }
     
     protected function createResult($name, $description)

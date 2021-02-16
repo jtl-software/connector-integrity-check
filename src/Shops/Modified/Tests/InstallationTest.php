@@ -8,7 +8,7 @@ use Jtl\Connector\Integrity\Models\Test\Error;
 
 class InstallationTest extends AbstractModifiedTest
 {
-    private static $min_version = '2.0.5';
+    private static $minVersion = '2.0.5';
 
     public function run()
     {
@@ -67,15 +67,15 @@ class InstallationTest extends AbstractModifiedTest
             );
         } else {
             $result->setData(
-                (new Data())->setExpected('>= ' . static::$min_version)
+                (new Data())->setExpected('>= ' . static::$minVersion)
                     ->setActual(PROJECT_MAJOR_VERSION.'.'.PROJECT_MINOR_VERSION)
             );
 
-            if (version_compare(PROJECT_MAJOR_VERSION.'.'.PROJECT_MINOR_VERSION, static::$min_version, '<')) {
+            if (version_compare(PROJECT_MAJOR_VERSION.'.'.PROJECT_MINOR_VERSION, static::$minVersion, '<')) {
                 $result->setError(
                     (new Error())->setMessage('Der Connector ist nicht mit Ihrer Modified-Version kompatibel.')
                         ->setLevel(Error::LEVEL_CRITICAL)
-                        ->setSolution('Bitte updaten Sie Ihre Modified-Installation auf mindestens ' . static::$min_version . ' oder neuer.')
+                        ->setSolution('Bitte updaten Sie Ihre Modified-Installation auf mindestens ' . static::$minVersion . ' oder neuer.')
                 );
             }
         }

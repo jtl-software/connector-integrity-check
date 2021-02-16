@@ -8,7 +8,7 @@ class TestCollection extends AbstractCollection
     /**
      * @var string
      */
-    protected $item_type = AbstractTest::class;
+    protected $itemType = AbstractTest::class;
     
     /**
      * @return bool
