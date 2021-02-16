@@ -1,11 +1,11 @@
 <?php
 namespace Jtl\Connector\Integrity\Shops\Modified;
 
-use Jtl\Connector\Integrity\Models\Test\AbstractTestLoader;
 use Jtl\Connector\Integrity\Shops\Modified\Tests\I18nTest;
 use Jtl\Connector\Integrity\Shops\Modified\Tests\InstallationTest;
+use Jtl\Connector\Integrity\Shops\XtcBase\AbstractXtcBaseTestLoader;
 
-class ModifiedTestLoader extends AbstractTestLoader
+class ModifiedTestLoader extends AbstractXtcBaseTestLoader
 {
     /**
      * ModifiedTestLoader constructor.

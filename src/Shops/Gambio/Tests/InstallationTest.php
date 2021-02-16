@@ -8,7 +8,7 @@ use Jtl\Connector\Integrity\Models\Test\Error;
 
 class InstallationTest extends AbstractGambioTest
 {
-    private static $min_version = '2.5';
+    private static $min_version = '3.9';
 
     public function run()
     {

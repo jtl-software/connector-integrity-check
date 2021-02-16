@@ -1,11 +1,11 @@
 <?php
 namespace Jtl\Connector\Integrity\Shops\Gambio;
 
-use Jtl\Connector\Integrity\Models\Test\AbstractTestLoader;
 use Jtl\Connector\Integrity\Shops\Gambio\Tests\I18nTest;
 use Jtl\Connector\Integrity\Shops\Gambio\Tests\InstallationTest;
+use Jtl\Connector\Integrity\Shops\XtcBase\AbstractXtcBaseTestLoader;
 
-class GambioTestLoader extends AbstractTestLoader
+class GambioTestLoader extends AbstractXtcBaseTestLoader
 {
     /**
      * GambioTestLoader constructor.

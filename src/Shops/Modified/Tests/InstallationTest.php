@@ -8,7 +8,7 @@ use Jtl\Connector\Integrity\Models\Test\Error;
 
 class InstallationTest extends AbstractModifiedTest
 {
-    private static $min_version = '2.0';
+    private static $min_version = '2.0.5';
 
     public function run()
     {

@@ -13,7 +13,7 @@ class PHPTest extends AbstractTest
         /**
          * Base
          */
-        $this->checkSapi();
+//        $this->checkSapi();
         $this->checkVersion();
         $this->checkMemoryLimit();
         $this->checkExecutionTime();
@@ -26,7 +26,6 @@ class PHPTest extends AbstractTest
          * Extensions
          */
         $this->checkJsonExtension();
-        $this->checkPharExtension();
         $this->checkSQLite3Extension();
         $this->checkZipExtension();
     }
@@ -90,11 +89,11 @@ class PHPTest extends AbstractTest
     {
         $result = (new Result())->setName('PHP-Version')
             ->setData(
-                (new Data())->setExpected('>= 5.6.0')
+                (new Data())->setExpected('>= 7.1.3')
                     ->setActual(PHP_VERSION)
             );
     
-        if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+        if (version_compare(PHP_VERSION, '7.1.3', '<')) {
             $result->setError(
                 (new Error())->setMessage('PHP-Version zu niedrig')
                     ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
@@ -246,41 +245,11 @@ class PHPTest extends AbstractTest
     private function checkJsonExtension()
     {
         $result = (new Result())->setName('PHP JSON-Extension')
-            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für das JSON-Format.<br>In neueren Debian-PHP-Paketen wird die Unterstützung für JSON standardmäßig nicht mehr mitinstalliert. Hierfür ist die Installation des Pakets <code>php5-json</code> erforderlich.');
+            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für das JSON-Format.<br>In neueren Debian-PHP-Paketen wird die Unterstützung für JSON standardmäßig nicht mehr mitinstalliert. Hierfür ist die Installation des Pakets <code>php-json</code> erforderlich.');
     
         if (!function_exists('json_encode') || !function_exists('json_decode')) {
             $result->setError(
                 (new Error())->setMessage('PHP JSON-Extension nicht vorhanden')
-                    ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
-            );
-        }
-    
-        $this->getResults()->add($result);
-    }
-    
-    /**
-     * Phar Extension
-     */
-    private function checkPharExtension()
-    {
-        $result = (new Result())->setName('PHP Phar-Extension')
-            ->setDescription('JTL-Connector benötigt PHP-Unterstützung für Phar, die korrekt konfiguriert sein muss.Phar muss z. B. in der Suhosin-Executor-Whitelist erlaubt sein.');
-    
-        $check = true;
-        if (!class_exists('Phar')) {
-            $check = false;
-        }
-    
-        if (extension_loaded('suhosin')) {
-            $whitelist = explode(',', ini_get('suhosin.executor.include.whitelist'));
-            if (!in_array('phar', $whitelist)) {
-                $check = false;
-            }
-        }
-        
-        if (!$check) {
-            $result->setError(
-                (new Error())->setMessage('PHP Phar-Extension nicht vorhanden')
                     ->setSolution('Bitte kontaktieren Sie Ihren Hoster oder Administrator')
             );
         }
@@ -295,7 +264,7 @@ class PHPTest extends AbstractTest
     {
         $result = (new Result())->setName('PHP SQLite3-Extension')
             ->setDescription('JTL-Connector benötigt PHP-Unterstützung für SQLite3.<br>
-Hierfür ist unter Debian z.B. die Installation des Pakets <code>php5-sqlite</code> erforderlich.');
+Hierfür ist unter Debian z.B. die Installation des Pakets <code>php-sqlite</code> erforderlich.');
         
         if (!class_exists('Sqlite3')) {
             $result->setError(
