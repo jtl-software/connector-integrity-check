@@ -8,6 +8,7 @@ class VarCombiChildrenWithSimpleFatherTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         global $wpdb;
 
         $childProducts = $wpdb->get_results("

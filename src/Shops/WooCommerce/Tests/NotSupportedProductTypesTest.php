@@ -8,6 +8,7 @@ class NotSupportedProductTypesTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         global $wpdb;
 
         $products = $wpdb->get_col("

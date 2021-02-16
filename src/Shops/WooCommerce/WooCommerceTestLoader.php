@@ -29,6 +29,6 @@ class WooCommerceTestLoader extends AbstractTestLoader
         $this->addTest(new DuplicatedSkuTest($sort++));
         $this->addTest(new OrphanVarCombisTest($sort++));
         $this->addTest(new VarCombiChildrenWithSimpleFatherTest($sort++));
-        $this->addTest(new VarCombiProductsWithoutVariationsTest($sort++));
+        $this->addTest(new VarCombiProductsWithoutVariationsTest($sort));
     }
 }

@@ -8,6 +8,7 @@ class DuplicatedSkuTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         global $wpdb;
 
         $duplicates = $wpdb->get_results("

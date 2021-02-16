@@ -15,6 +15,8 @@ use Jtl\Connector\Integrity\Shops\WooCommerce\WooCommerceTestLoader;
 
 final class IntegrityCheck
 {
+    const VERSION = '0.3';
+
     /**
      * @var TestCollection
      */

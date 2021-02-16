@@ -8,6 +8,7 @@ class OrphanCategoriesTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         global $wpdb;
 
         $orphans = $wpdb->get_col("

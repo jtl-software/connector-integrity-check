@@ -8,6 +8,7 @@ class VarCombiProductsWithoutVariationsTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         $this->parentsWithoutVariations();
         $this->childrenWithoutVariations();
     }

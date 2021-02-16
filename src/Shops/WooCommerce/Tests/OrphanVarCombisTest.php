@@ -8,6 +8,7 @@ class OrphanVarCombisTest extends AbstractWooCommerceTest
 {
     public function run()
     {
+        $this->requireConfigFile();
         $this->parentsWithoutChildren();
         $this->childrenWithoutParents();
     }

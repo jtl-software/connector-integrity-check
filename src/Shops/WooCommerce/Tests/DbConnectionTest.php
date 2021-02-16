@@ -1,4 +1,5 @@
 <?php
+
 namespace Jtl\Connector\Integrity\Shops\WooCommerce\Tests;
 
 use Jtl\Connector\Integrity\Exceptions\FileNotExistsException;
@@ -8,12 +9,13 @@ class DbConnectionTest extends AbstractWooCommerceTest
 {
     public function run()
     {
-        $result = $this->createResult(
-            'WordPress Datenbank-Verbindung',
-            'Eine Datenbankverbindung ist notwendig um die Integritätstests druchführen zu können.'
-        );
-
         try {
+            $result = $this->createResult(
+                'WordPress Datenbank-Verbindung',
+                'Eine Datenbankverbindung ist notwendig um die Integritätstests druchführen zu können.'
+            );
+
+            $this->requireConfigFile();
             global $wpdb;
 
             if (is_null($wpdb)) {
