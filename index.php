@@ -1,4 +1,4 @@
 <?php
-$requestUri = $_SERVER['REQUEST_URI'] === '/' ? '' : '/' . rtrim($_SERVER['REQUEST_URI'], '/');
-$redirectUrl = sprintf('%s/public', $requestUri);
+$requestUri = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
+$redirectUrl = sprintf('%spublic', $requestUri);
 header(sprintf('Location: %s', $redirectUrl));
