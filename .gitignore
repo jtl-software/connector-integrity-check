@@ -6,3 +6,5 @@ vendor
 public/mix-manifest.json
 mix-manifest.json
 /package-lock.json
+public/css/application.css
+public/js/application.js
