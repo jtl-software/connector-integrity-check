@@ -1,0 +1,16 @@
+variables:
+  FF_USE_FASTZIP: 1
+  COMPOSER_CACHE_DIR: ${CI_PROJECT_DIR}/.composer-cache
+
+include:
+  - project: 'connector/connector-utils/CI-Templates'
+    file:
+      - 'auto-create-mr/ci.yaml'
+      - 'code-quality/ci.yaml'
+
+stages:
+  - createMR
+  - test
+
+code_quality:
+  before_script: []
